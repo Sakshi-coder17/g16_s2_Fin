@@ -1,0 +1,390 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\title{L4 Scribe}
+\author{Dhruvika Mehta}
+\date{February 2026}
+
+\begin{document}
+
+
+\title{CSE400 -- Fundamentals of Probability in Computing\\
+Lecture 4 Scribe: Joint Probability and Conditional Probability}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\noindent
+\textbf{Instructor:} Dr.\ Dhaval Patel
+
+\medskip
+\noindent
+\textbf{Purpose:} Exam-reference lecture scribe prepared strictly from the provided lecture slides and relevant textbook excerpts. The structure, definitions, derivations, and worked examples follow the lecture exactly so that students can reproduce reasoning during examination revision.
+
+\medskip
+\noindent
+This scribe preserves the lecture’s logical development. Each concept is presented in sequence, with explicit reasoning steps used in class. Only material contained in the provided lecture context is included; no additional assumptions or examples are introduced.
+
+\hrule
+\vspace{0.5cm}
+
+\section{Foundations of Probability}
+
+Probability theory begins by formally defining experiments and their possible outcomes.
+
+\subsection{Experiment}
+
+An \textbf{experiment} is a procedure that produces a result when performed.
+
+Lecture example: tossing a coin five times. Each execution produces one sequence of outcomes.
+
+\subsection{Outcome}
+
+An \textbf{outcome} is one possible result of an experiment.
+
+For five coin tosses, one possible outcome is:
+\[
+\omega = HHTHT
+\]
+Each complete sequence corresponds to one elementary result.
+
+\subsection{Event}
+
+An \textbf{event} is a set of outcomes satisfying a specified condition.
+
+Lecture example: outcomes containing an even number of heads.
+
+Thus,
+\begin{itemize}
+    \item Outcome refers to one result,
+    \item Event refers to a collection of outcomes satisfying a rule.
+\end{itemize}
+
+\subsection{Sample Space}
+
+The \textbf{sample space}, denoted $S$, is the set of all possible outcomes.
+
+Key properties:
+\begin{itemize}
+    \item Outcomes are \textbf{mutually exclusive}, meaning only one occurs per experiment.
+    \item Outcomes are \textbf{collectively exhaustive}, meaning all possible outcomes are included.
+\end{itemize}
+
+Example: for one coin toss,
+\[
+S = \{H, T\}
+\]
+
+Sample spaces may be discrete, countably infinite, or continuous.
+
+\section{Axioms of Probability}
+
+Probability assignments satisfy three axioms.
+
+\subsection*{Axiom 1 --- Non-negativity}
+
+For any event $A$,
+\[
+0 \le Pr(A) \le 1
+\]
+
+\subsection*{Axiom 2 --- Total Probability}
+
+The probability of the sample space equals:
+\[
+Pr(S) = 1
+\]
+
+\subsection*{Axiom 3 --- Additivity}
+
+If events are mutually exclusive,
+\[
+Pr(A \cup B) = Pr(A) + Pr(B)
+\]
+
+More generally,
+\[
+Pr\left(\bigcup_i A_i\right) = \sum_i Pr(A_i)
+\]
+for mutually exclusive events.
+
+These axioms serve as the foundation of probability theory.
+
+\section{Results Derived from the Axioms}
+
+Using the axioms, further properties are derived.
+
+\subsection{Complement Rule}
+
+The complement $A^c$ contains outcomes where $A$ does not occur.
+
+Since event and complement together form the sample space,
+\[
+Pr(A) + Pr(A^c) = 1
+\]
+Therefore,
+\[
+Pr(A^c) = 1 - Pr(A)
+\]
+
+\subsection{Monotonicity Property}
+
+If
+\[
+A \subset B,
+\]
+then all outcomes of $A$ lie within $B$, implying
+\[
+Pr(A) \le Pr(B)
+\]
+
+\subsection{Union Rule}
+
+For any events,
+\[
+Pr(A \cup B) = Pr(A) + Pr(B) - Pr(A \cap B)
+\]
+The intersection is subtracted to avoid double counting.
+
+\subsection{Inclusion--Exclusion Principle}
+
+For several events, probabilities of unions are computed using alternating sums and intersections.
+
+\section{Assigning Probabilities}
+
+\subsection{Classical Method}
+
+When outcomes are equally likely,
+\[
+Pr(A) = 
+\frac{\text{number of favorable outcomes}}
+{\text{total outcomes}}
+\]
+
+Lecture examples:
+\begin{itemize}
+    \item Probability of head in a fair coin = $1/2$.
+    \item Probability of even number on a die = $3/6$.
+\end{itemize}
+
+\subsection{Relative Frequency Method}
+
+Probability may be approximated using repeated trials:
+\[
+Pr(A) \approx 
+\frac{\text{number of occurrences of } A}
+{\text{number of trials}}
+\]
+As trials increase, the ratio stabilizes, although infinite repetition is not possible.
+
+\section{Joint Probability}
+
+Events may occur simultaneously and are not always mutually exclusive.
+
+Joint probability is written as:
+\[
+Pr(A \cap B) \quad \text{or} \quad Pr(A,B)
+\]
+representing simultaneous occurrence.
+
+Lecture computation procedure:
+\begin{enumerate}[label=\arabic*.]
+    \item Represent events via outcomes.
+    \item Identify outcomes common to both events.
+    \item Sum their probabilities.
+\end{enumerate}
+
+\section{Example --- Card Deck Probabilities}
+
+Given:
+\begin{itemize}
+    \item Standard deck with 52 cards,
+    \item 13 cards per suit.
+\end{itemize}
+
+Define:
+\begin{itemize}
+    \item $A$: card is red,
+    \item $B$: card is a number card (Ace included),
+    \item $C$: card is a heart.
+\end{itemize}
+
+\subsection*{Individual probabilities}
+
+Red cards:
+\[
+Pr(A) = \frac{26}{52} = \frac{1}{2}
+\]
+
+Number cards:
+\[
+Pr(B) = \frac{40}{52}
+\]
+
+Hearts:
+\[
+Pr(C) = \frac{13}{52}
+\]
+
+\subsection*{Joint probabilities}
+
+Red and number cards:
+\[
+Pr(A,B) = \frac{20}{52}
+\]
+
+Red and hearts:
+\[
+Pr(A,C) = \frac{13}{52}
+\]
+
+Number cards and hearts:
+\[
+Pr(B,C) = \frac{10}{52}
+\]
+
+\section{Example --- Costume Party Selection}
+
+Tops:
+\begin{itemize}
+    \item 3 T-shirts,
+    \item 1 cape $\Rightarrow$ total 4.
+\end{itemize}
+
+\[
+Pr(\text{Cape}) = \frac{1}{4}
+\]
+
+Bottoms:
+\begin{itemize}
+    \item 2 pants,
+    \item 4 boxers $\Rightarrow$ total 6.
+\end{itemize}
+
+\[
+Pr(\text{Boxers}) = \frac{4}{6}
+\]
+
+Selections are independent, therefore
+\[
+Pr(\text{Cape and Boxers}) = 
+\left(\frac{1}{4}\right)\left(\frac{4}{6}\right)
+= \frac{1}{6}
+\]
+
+Correct answer: Option C.
+
+\section{Conditional Probability}
+
+When occurrence of one event influences another, conditional probability is defined as:
+\[
+Pr(A|B) = 
+\frac{Pr(A \cap B)}{Pr(B)}, \quad Pr(B) > 0
+\]
+
+\subsection*{Product Rule}
+
+From the definition,
+\[
+Pr(A,B) = Pr(A|B)Pr(B)
+\]
+and equivalently,
+\[
+Pr(A,B) = Pr(B|A)Pr(A)
+\]
+
+\subsection*{Chain Rule}
+
+For three events,
+\[
+Pr(A,B,C) = Pr(C|A,B)Pr(B|A)Pr(A)
+\]
+This extends similarly to additional events.
+
+\section{Example --- Cards Drawn Without Replacement}
+
+If the first card drawn is a spade:
+
+Remaining cards:
+\begin{itemize}
+    \item Total cards = 51,
+    \item Remaining spades = 12.
+\end{itemize}
+
+Thus,
+\[
+Pr(B|A) = \frac{12}{51}
+\]
+Probability changes since the card is not replaced.
+
+\section{Example --- Poker Flush Probability}
+
+A flush requires all cards from the same suit.
+
+\subsection*{Flush in spades}
+
+Sequential probability:
+\[
+\frac{13}{52} \cdot
+\frac{12}{51} \cdot
+\frac{11}{50} \cdot
+\frac{10}{49} \cdot
+\frac{9}{48}
+\]
+Counts decrease after each draw.
+
+\subsection*{Any suit flush}
+
+Since suits are mutually exclusive,
+\[
+Pr(\text{flush}) = 
+4 \times Pr(\text{spade flush})
+\]
+
+\section{Example --- Missing Key Problem}
+
+Given:
+\begin{itemize}
+    \item Left pocket probability = 0.4,
+    \item Right pocket probability = 0.4,
+    \item Jacket probability = 0.8.
+\end{itemize}
+
+After not finding the key in the left pocket:
+\[
+Pr(R|L^c) = 
+\frac{Pr(R)}{1 - Pr(L)}
+\]
+
+Substituting,
+\[
+= \frac{0.4}{0.6} = \frac{2}{3}
+\]
+
+Correct answer: Option C.
+
+\section{Exam Revision Checklist}
+
+Students must be able to:
+\begin{itemize}
+    \item Define experiment, outcome, event, and sample space.
+    \item State probability axioms.
+    \item Apply complement and union rules.
+    \item Compute classical probabilities.
+    \item Compute joint probabilities.
+    \item Apply conditional probability.
+    \item Use product and chain rules.
+    \item Solve without-replacement problems.
+    \item Compute flush probabilities.
+\end{itemize}
+
+\medskip
+\noindent
+This completes the lecture scribe, faithfully reproducing Lecture 4 content and reasoning to serve as exam reference material strictly based on the provided lecture material.
+
+\end{document}
+
+\end{document}
