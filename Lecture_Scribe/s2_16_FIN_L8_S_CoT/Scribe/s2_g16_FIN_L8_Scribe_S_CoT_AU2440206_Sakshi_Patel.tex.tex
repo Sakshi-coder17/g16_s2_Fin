@@ -1,0 +1,477 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amsmath, amssymb, graphicx}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{hyperref}
+
+\geometry{margin=1in}
+\setstretch{1.2}
+
+\title{\textbf{Lecture Scribe}\\Fundamentals of Probability in Computing}
+\author{
+Name: Sakshi Patel\\
+Student ID: AU2440206\\
+Course: Fundamentals of Probability in Computing\\
+}
+\date{}
+\begin{document}
+
+\maketitle
+\newpage
+
+\section*{1️⃣ Main Topics Covered in the Lecture}
+
+From the lecture material, the key concepts are:
+
+\begin{itemize}
+\item Gaussian Random Variable
+\item Q-function and Error Function
+\item Relation between $\Phi$ and $Q$
+\item Continuous Random Variables
+\begin{itemize}
+\item Uniform
+\item Exponential
+\item Laplace
+\item Gamma
+\end{itemize}
+\item Graphs \& special cases
+\item Density estimation \& problem solving
+\end{itemize}
+
+We’ll now build understanding in a logical teaching order.
+
+\section*{2️⃣ Continuous Random Variables — Foundation}
+
+\textbf{Conceptual idea}
+
+A variable that can take any real value within an interval.
+
+Examples:
+
+\begin{itemize}
+\item Time taken by an algorithm
+\item Network latency
+\item Temperature
+\end{itemize}
+
+\textbf{Mathematical idea}
+
+Probability at a single point = 0
+
+\[
+P(X = x) = 0
+\]
+
+Instead:
+
+\[
+P(a < X < b) = \int_a^b f(x)\,dx
+\]
+
+where $f(x)$ = Probability Density Function (PDF)
+
+\textbf{Intuition}
+
+Probability = area under curve.
+
+Why?
+
+Because infinite possible values → probability spread continuously.
+
+\section*{3️⃣ Gaussian Random Variable (Normal Distribution)}
+
+\textbf{Definition}
+
+A continuous random variable whose values cluster around a mean following a bell-shaped curve.
+
+\textbf{Formula}
+
+\[
+f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}
+\]
+
+Where:
+
+\begin{itemize}
+\item $\mu$ → mean
+\item $\sigma^2$ → variance
+\end{itemize}
+
+\textbf{Conceptual Understanding}
+
+Nature loves Gaussian distributions:
+
+\begin{itemize}
+\item Human height
+\item Sensor noise
+\item Measurement errors
+\end{itemize}
+
+Reason:
+
+Many small random effects combine → normal distribution emerges.
+
+\textbf{Why this formula? (Stepwise reasoning)}
+
+We need:
+
+\begin{itemize}
+\item Symmetry around mean → depends on $x-\mu$
+\item Equal effect left/right → square term $(x-\mu)^2$
+\item Smooth decay → exponential function
+\item Total probability = 1 → normalization constant $\frac{1}{\sqrt{2\pi\sigma^2}}$
+\end{itemize}
+
+Each step logically builds:
+
+symmetry → squared distance → exponential decay → normalization.
+
+\textbf{Properties}
+
+\begin{itemize}
+\item Symmetric curve
+\item Mean = median = mode
+\item Bell shaped
+\item Controlled spread by variance
+\end{itemize}
+
+\textbf{Example}
+
+Marks distribution:
+
+Mean = 60
+
+Std dev = 10
+
+Probability student scores between 50 and 70:
+
+Step 1: Convert to standard normal
+
+\[
+Z = \frac{X - \mu}{\sigma}
+\]
+
+\[
+Z_1 = -1, \quad Z_2 = 1
+\]
+
+Step 2: Use Z-table
+
+\[
+P(-1 < Z < 1)
+\]
+
+Step 3: Interpret area.
+
+\section*{4️⃣ Standard Normal Distribution}
+
+When:
+
+\[
+Z = \frac{X - \mu}{\sigma}
+\]
+
+Then:
+
+\begin{itemize}
+\item Mean = 0
+\item Variance = 1
+\end{itemize}
+
+Why needed?
+
+Because every Gaussian becomes one standard form → easy calculations.
+
+\section*{5️⃣ $\Phi$ (Phi) Function}
+
+\[
+\Phi(z) = P(Z \le z)
+\]
+
+Represents cumulative probability from left side.
+
+Conceptually:
+
+Area under curve till point $z$.
+
+\section*{6️⃣ Q-Function}
+
+\[
+Q(z) = P(Z > z)
+\]
+
+Right-tail probability.
+
+Used in:
+
+\begin{itemize}
+\item Communication systems
+\item Error probability
+\item Machine learning thresholds
+\end{itemize}
+
+\textbf{Relation between $\Phi$ and $Q$}
+
+\[
+Q(z) = 1 - \Phi(z)
+\]
+
+Logical reasoning:
+
+Total probability = 1
+
+Left area + right area = 1.
+
+\section*{7️⃣ Error Function}
+
+Used for Gaussian integration.
+
+\[
+\text{erf}(x) = \frac{2}{\sqrt{\pi}} \int_0^x e^{-t^2} dt
+\]
+
+Relation:
+
+\[
+\Phi(z) = \frac{1}{2}\left[1 + \text{erf}\left(\frac{z}{\sqrt{2}}\right)\right]
+\]
+
+Why used?
+
+Because Gaussian integrals don’t have simple closed forms.
+
+\section*{8️⃣ Types of Continuous Random Variables}
+
+\subsection*{�� Uniform Distribution}
+
+Definition
+
+All values equally likely.
+
+\[
+f(x) = \frac{1}{b-a}, \quad a \le x \le b
+\]
+
+Intuition
+
+Flat probability.
+
+Example
+
+Random number generator between 0 and 1.
+
+\subsection*{�� Exponential Distribution}
+
+Definition
+
+Models waiting time for events.
+
+\[
+f(x) = \lambda e^{-\lambda x}
+\]
+
+Property — Memoryless
+
+\[
+P(X > s+t \mid X > s) = P(X > t)
+\]
+
+Why?
+
+Future independent of past.
+
+Example
+
+Time until server failure.
+
+\subsection*{�� Laplace Distribution}
+
+Double exponential.
+
+\[
+f(x) = \frac{1}{2b} e^{-|x-\mu|/b}
+\]
+
+Sharper peak than Gaussian.
+
+Used in:
+
+\begin{itemize}
+\item Signal compression
+\item Data modelling with outliers
+\end{itemize}
+
+\subsection*{�� Gamma Distribution}
+
+Generalization of exponential.
+
+\[
+f(x) = \frac{x^{k-1} e^{-x/\theta}}{\Gamma(k)\theta^k}
+\]
+
+Special case
+
+$k = 1 \rightarrow$ exponential.
+
+Example
+
+Time until $k$ events occur.
+
+\section*{9️⃣ Graphical Understanding}
+
+\begin{itemize}
+\item Uniform → flat
+\item Gaussian → bell
+\item Exponential → decreasing
+\item Laplace → sharp center
+\item Gamma → flexible skewed shape
+\end{itemize}
+
+Each distribution models different real-world uncertainty.
+
+\section*{10 Gaussian Density Estimation}
+
+Goal:
+
+Find distribution parameters from data.
+
+Steps:
+
+\begin{itemize}
+\item Collect data
+\item Calculate mean
+\item Calculate variance
+\item Fit Gaussian curve
+\end{itemize}
+
+Used in:
+
+\begin{itemize}
+\item Machine learning
+\item Pattern recognition
+\item Signal processing
+\end{itemize}
+
+\section*{1️⃣1️⃣ Problem Solving Logic}
+
+Whenever a probability question appears:
+
+\begin{itemize}
+\item Step 1 → Identify distribution
+\item Step 2 → Write PDF
+\item Step 3 → Convert to standard form if Gaussian
+\item Step 4 → Integrate / use table
+\item Step 5 → Interpret result
+\end{itemize}
+
+\section*{1️⃣2️⃣ Concept Check}
+
+\begin{tabular}{|l|l|l|l|}
+\hline
+Concept & Mathematical & Intuitive & Where used\\
+\hline
+Gaussian & exponential squared & natural randomness & ML, signals\\
+Uniform & constant & equal chance & simulations\\
+Exponential & decay & waiting time & reliability\\
+Gamma & generalized & multiple events & queueing\\
+\hline
+\end{tabular}
+\newline\\
+Yes — these interpretations match real problems.
+
+\section*{13 Concise Summary}
+
+\begin{itemize}
+\item Continuous variables → probability via area
+\item Gaussian → most important real-world distribution
+\item $\Phi$ → cumulative probability
+\item $Q$ → error/tail probability
+\item Uniform, exponential, Laplace, gamma → key modeling tools
+\item Density estimation → find distribution from data
+\end{itemize}
+
+\section*{14 Key Formula Sheet}
+
+Gaussian
+
+\[
+f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-(x-\mu)^2/2\sigma^2}
+\]
+
+Standardization
+
+\[
+Z = \frac{X-\mu}{\sigma}
+\]
+
+$\Phi$-function
+
+\[
+\Phi(z) = P(Z \le z)
+\]
+
+Q-function
+
+\[
+Q(z) = 1-\Phi(z)
+\]
+
+Uniform
+
+\[
+f(x)=\frac{1}{b-a}
+\]
+
+Exponential
+
+\[
+f(x)=\lambda e^{-\lambda x}
+\]
+
+Laplace
+
+\[
+f(x)=\frac{1}{2b} e^{-|x-\mu|/b}
+\]
+
+Gamma
+
+\[
+f(x)=\frac{x^{k-1} e^{-x/\theta}}{\Gamma(k)\theta^k}
+\]
+
+\section*{15 Probable Exam Questions}
+
+\textbf{Theory}
+
+\begin{itemize}
+\item Define Gaussian distribution
+\item Properties of exponential distribution
+\item Laplace vs Gaussian
+\end{itemize}
+
+\textbf{Derivations}
+
+\begin{itemize}
+\item Standard normal transformation
+\item $\Phi$-$Q$ relation
+\item Mean/variance of exponential
+\end{itemize}
+
+\textbf{Numerical}
+
+\begin{itemize}
+\item Z-table probability
+\item Uniform distribution interval
+\item Waiting time problems
+\end{itemize}
+
+\textbf{Conceptual}
+
+\begin{itemize}
+\item Why Gaussian appears naturally
+\item Memoryless property explanation
+\end{itemize}
+
+\end{document}
