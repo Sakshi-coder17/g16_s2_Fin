@@ -1,0 +1,415 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\title{L8 Scribe}
+\author{Dhruvika Mehta}
+\date{February 2026}
+
+\begin{document}
+
+
+
+
+\title{CSE400 -- Fundamentals of Probability in Computing\\
+Lecture 8 Scribe: Gaussian Random Variable --- Definition, Standard Forms, Probability Evaluation, and Applications}
+\author{Instructor: Dr.\ Dhaval Patel}
+\date{}
+
+
+
+\maketitle
+
+\textbf{Course:} CSE400 -- Fundamentals of Probability in Computing
+
+\textbf{Lecture Topic:} Gaussian Random Variable --- Definition and Properties
+
+\textbf{Purpose:} This lecture scribe is prepared strictly from the provided lecture slides and supporting textbook excerpts. It is intended to serve as exam-reference material. Definitions, derivations, and example solutions are written step by step so that students can reproduce reasoning during revision. The structure, notation, and logical progression follow the lecture faithfully, and no additional assumptions or material are introduced.
+
+\hrule
+\vspace{0.5em}
+
+\section{Lecture Scope and Structure}
+
+The lecture focuses on Gaussian random variables and probability evaluation tools. The structure followed in the lecture is:
+
+\begin{enumerate}
+    \item Review of standardized moments describing distribution shape.
+    \item Expected value of functions of random variables.
+    \item Definition and properties of Gaussian random variables.
+    \item Standard forms: error function, $\Phi$-function, and Q-function.
+    \item Relation between $\Phi$ and Q functions.
+    \item Evaluation of Gaussian CDF and tail probabilities.
+    \item Worked probability examples.
+    \item Application examples.
+    \item Problem solving using a given CDF.
+    \item Gaussian modeling motivation and density estimation.
+    \item Applications in network systems and computing contexts.
+\end{enumerate}
+
+The lecture builds the connection between probability theory and modeling uncertainty in practical systems.
+
+\section{Shape Measures of a Distribution}
+
+The lecture begins by recalling measures that describe distribution shape beyond mean and variance.
+
+\subsection{Skewness}
+
+Skewness measures symmetry of a probability distribution around the mean.
+
+It is defined as
+\[
+c_3 = \frac{E[(X-\mu)^3]}{\sigma^3}
+\]
+
+\textbf{Reasoning:}
+\begin{itemize}
+    \item The term $(X-\mu)^3$ preserves sign, so positive and negative deviations contribute differently.
+    \item Dividing by $\sigma^3$ makes the measure dimensionless.
+\end{itemize}
+
+\textbf{Interpretation:}
+\begin{itemize}
+    \item Positive skewness $\rightarrow$ distribution extends more to the right.
+    \item Negative skewness $\rightarrow$ distribution extends more to the left.
+    \item Zero skewness $\rightarrow$ symmetric distribution.
+\end{itemize}
+
+Thus skewness quantifies directional asymmetry.
+
+\subsection{Kurtosis}
+
+Kurtosis measures how peaked or flat the distribution is relative to the Gaussian case.
+
+Definition:
+\[
+c_4 = \frac{E[(X-\mu)^4]}{\sigma^4}
+\]
+
+\textbf{Reasoning:}
+\begin{itemize}
+    \item Fourth power emphasizes large deviations.
+    \item Normalization removes dependence on scale.
+\end{itemize}
+
+\textbf{Interpretation:}
+\begin{itemize}
+    \item Larger values imply heavier tails and sharper peak.
+    \item Smaller values imply flatter distributions.
+\end{itemize}
+
+Hence kurtosis indicates concentration of probability around the mean.
+
+\section{Expected Value of a Function of a Random Variable}
+
+Expectation of a function depends on the type of random variable.
+
+\subsection{Continuous Random Variable}
+
+For a function $g(X)$,
+\[
+E[g(X)] = \int g(x) f_X(x)\, dx
+\]
+
+\textbf{Reasoning:} Each value contributes proportionally to its density.
+
+\subsection{Discrete Random Variable}
+
+\[
+E[g(X)] = \sum g(x_k) P_X(x_k)
+\]
+
+Each possible value contributes weighted by probability mass.
+
+\subsection{Linearity of Expectation}
+
+For constants $a, b$,
+\[
+E[aX + b] = aE[X] + b
+\]
+
+Also,
+\[
+E\left[\sum g_k(X)\right] = \sum E[g_k(X)]
+\]
+
+This property simplifies expectation calculations.
+
+\section{Gaussian Random Variable}
+
+\subsection{Definition}
+
+A random variable is Gaussian if its probability density function is
+
+\[
+f_X(x) =
+\frac{1}{\sqrt{2\pi\sigma^2}}
+\exp\left(-\frac{(x-m)^2}{2\sigma^2}\right)
+\]
+
+Notation:
+\[
+X \sim N(m,\sigma^2)
+\]
+
+where
+\begin{itemize}
+    \item $m$ is the mean,
+    \item $\sigma^2$ is the variance.
+\end{itemize}
+
+\subsection{Observed Properties}
+
+From lecture graphs:
+
+\begin{itemize}
+    \item PDF is symmetric about mean $m$.
+    \item Maximum density occurs at the mean.
+    \item Larger variance produces wider spread.
+    \item CDF has S-shaped growth from 0 to 1.
+\end{itemize}
+
+Thus mean sets location, variance sets spread.
+
+\section{Standard Forms}
+
+To evaluate probabilities conveniently, Gaussian variables are standardized.
+
+\subsection{Error Function}
+
+Defined as
+\[
+\text{erf}(x) = \frac{2}{\sqrt{\pi}} \int_0^x e^{-t^2} dt
+\]
+
+Complementary error function:
+\[
+\text{erfc}(x) = 1 - \text{erf}(x)
+\]
+
+These functions appear in Gaussian integral evaluation.
+
+\subsection{$\Phi$-Function (Standard Normal CDF)}
+
+Defined for standard normal variable as
+\[
+\Phi(x) = \int_{-\infty}^{x}
+\frac{1}{\sqrt{2\pi}} e^{-t^2/2} dt
+\]
+
+This gives probability to the left of $x$.
+
+\subsection{Q-Function (Gaussian Tail Function)}
+
+Defined as
+\[
+Q(x) = \int_x^{\infty}
+\frac{1}{\sqrt{2\pi}} e^{-t^2/2} dt
+\]
+
+This gives probability in the right tail.
+
+\subsection{Relation Between $\Phi$ and Q}
+
+Lecture identity:
+\[
+Q(x) = 1 - \Phi(x)
+\]
+
+Thus:
+\begin{itemize}
+    \item $\Phi$ is used for CDF evaluation.
+    \item Q is convenient for right-tail probabilities.
+\end{itemize}
+
+\section{Evaluating Gaussian CDF}
+
+For $X \sim N(m,\sigma^2)$, define standardized variable
+
+\[
+Z = \frac{X - m}{\sigma}
+\]
+
+Then,
+
+\[
+F_X(x) = \Phi\left(\frac{x - m}{\sigma}\right)
+\]
+
+\textbf{Reasoning:} Standardization converts the variable to standard normal form.
+
+\subsection*{Tail Probability}
+
+Right-tail probability becomes
+\[
+P(X > x) = Q\left(\frac{x - m}{\sigma}\right)
+\]
+
+Hence Q-function directly evaluates right tails.
+
+\section{Worked Probability Transformations}
+
+\subsection{Example: Interval Probability}
+
+Given
+\[
+|X + 3| < 2
+\]
+
+Step-by-step reasoning:
+\[
+-2 < X + 3 < 2
+\]
+
+Subtracting 3:
+\[
+-5 < X < -1
+\]
+
+Thus probability becomes
+\[
+F_X(-1) - F_X(-5)
+\]
+
+Using symmetry:
+\[
+= 2\Phi(1) - 1 = 1 - 2Q(1)
+\]
+
+\subsection{Example: Two-Sided Condition}
+
+Given
+\[
+|X - 2| > 1
+\]
+
+Equivalent to
+\[
+X < 1 \quad \text{or} \quad X > 3
+\]
+
+Thus,
+\[
+P(X < 1) + P(X > 3)
+\]
+evaluated using $\Phi$ and Q.
+
+\section{Application Examples}
+
+Lecture examples include:
+
+\begin{enumerate}
+    \item Thermal noise in circuits.
+    \item Measurement error in sensors.
+    \item Packet delay variation in communication networks.
+\end{enumerate}
+
+In all cases:
+\[
+\text{Measured value} = \text{True value} + \text{Gaussian noise}
+\]
+
+\section{Problem Solving Using Given CDF}
+
+Given CDF:
+\[
+F_X(x)=
+\begin{cases}
+0, & x<0 \\
+x^2, & 0<x<1 \\
+1, & x>1
+\end{cases}
+\]
+
+\subsection*{Step 1: Obtain PDF}
+
+Differentiate:
+\[
+f_X(x) = 2x, \quad 0<x<1
+\]
+
+\subsection*{Step 2: Mean and Variance}
+
+Mean and variance are computed using expectation formulas.
+
+\subsection*{Step 3: Skewness and Kurtosis}
+
+Higher moments are evaluated.
+
+Lecture conclusion:
+\begin{itemize}
+    \item Distribution is left-skewed.
+    \item Distribution is platykurtic.
+\end{itemize}
+
+\section{Gaussian Modeling Motivation}
+
+Lecture motivation:
+
+Real-world measurements exhibit randomness.
+
+Repeated observations produce uncertainty clouds.
+
+Model:
+\[
+X = \mu + \sigma Z
+\]
+where $Z$ is standard normal.
+
+Probability models uncertainty rather than exact values.
+
+\section{Density Estimation}
+
+In practical systems parameters are unknown.
+
+Procedure:
+\begin{enumerate}
+    \item Collect noisy samples.
+    \item Estimate mean and variance.
+    \item Fit Gaussian model.
+\end{enumerate}
+
+This replaces raw histogram data with smooth probabilistic representation.
+
+\section{Networking Application}
+
+Packet delay modeling objectives:
+\begin{itemize}
+    \item Estimate typical delay.
+    \item Measure delay variation (jitter).
+\end{itemize}
+
+Observation: large variation harms real-time applications more than constant delay.
+
+\section{Broader Computing Applications}
+
+Gaussian modeling appears in:
+\begin{itemize}
+    \item Image denoising,
+    \item Distributed systems,
+    \item Sensor fusion,
+    \item Autonomous systems.
+\end{itemize}
+
+Conclusion: uncertainty modeling is central in modern computing systems.
+
+\section*{Final Revision Checklist}
+
+Students should be able to:
+
+\begin{enumerate}
+    \item State Gaussian PDF and parameters.
+    \item Standardize variables.
+    \item Use $\Phi$ and Q correctly.
+    \item Evaluate interval and tail probabilities.
+    \item Compute moments from PDF/CDF.
+    \item Interpret skewness and kurtosis.
+    \item Explain Gaussian modeling motivation.
+\end{enumerate}
+
+\vspace{1em}
+\textbf{End of Lecture 8 Scribe.}
+
+\end{document}
+
+
+\end{document}
