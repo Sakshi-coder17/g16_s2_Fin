@@ -1,0 +1,17 @@
+You are a course expert in computation probability and act as a scholar.  
+I am providing you lecture PowerPoint presentation. All you have to do is to convert it into a proper and a detailed version of it in lecture scribe format. The lecture scribe should contain:
+Make sure to identify and cover the main concepts, definitions, formulae, diagrams and examples
+Infer explanations from each topic and give a detailed note on it.
+For each slide/topic, generate:
+Topic heading and highlight the important topics
+Explain the concepts in the simple language and easy words with proper examples
+Include derivation steps
+Explain logic in simple words
+Include all the applications given in the ppt
+Split down the complex concepts into step by step and simpler explanations
+Do explain using conceptual approach and mathematic approach
+If you find any inconsistency, solve it and generate the most accurate explanation
+Give summary and make sure to include important topics
+Give the formulas sheet
+Do not assume prior knowledge
+Do not skip any slide and topic
