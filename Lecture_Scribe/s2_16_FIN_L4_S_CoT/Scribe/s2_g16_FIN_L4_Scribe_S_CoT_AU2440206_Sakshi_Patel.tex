@@ -1,0 +1,531 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amsmath, amssymb, graphicx}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{hyperref}
+
+\geometry{margin=1in}
+\setstretch{1.2}
+
+\title{\textbf{Lecture Scribe}\\Fundamentals of Probability in Computing}
+\author{
+Name: Sakshi Patel\\
+Student ID: AU2440206\\
+Course: Fundamentals of Probability in Computing\\
+}
+\begin{document}
+\date{}
+\maketitle
+\newpage
+
+\section*{Step 1: Main Topics Identified (from the PDF)}
+
+From the outline in the lecture (pages 2–3):
+
+\begin{enumerate}
+\item General Course Info + Why learn CSE400?
+
+Engineering motivation
+
+Applications: Speech recognition, Radar, Communication networks
+
+\item Introduction to Probability Theory
+
+Experiment, Sample Space, Events
+
+Axioms of Probability
+
+Corollaries and Propositions from axioms
+
+Assigning probability (Classical \& Relative frequency) (mentioned but not shown in the visible pages)
+
+\item Joint Probability (mentioned in outline but not included in these 20 pages)
+
+Motivation, notation, concept
+
+Card deck example
+
+Costume party example
+
+\item Conditional Probability (mentioned in outline but not included in these 20 pages)
+
+Motivation, notation, concept
+
+Cards without replacement
+
+Poker
+
+Missing key
+\end{enumerate}
+
+So in this PDF portion, we can fully study:
+
+intro definitions + axioms + corollaries + propositions.
+
+\section*{1) Why should we learn Probability? (Computing Motivation)}
+
+The lecture first explains probability through engineering applications.
+
+\subsection*{1.1 Speech Recognition System (pages 3–4)}
+
+Conceptual idea:
+
+Speech recognition systems store a vocabulary like:
+
+Hello
+
+Yes
+
+No
+
+Bye
+
+And for each word, the system stores templates (waveforms).
+
+Why probability is needed?
+
+Because the input speech can vary due to:
+
+Noise
+
+Different speakers
+
+Interruptions
+
+So the system must decide:
+
+Which word has the highest probability given the observed signal?
+
+That is exactly a probability-based decision.
+
+\subsection*{1.2 Radar System (page 5)}
+
+Radar tries to detect whether an aircraft is present.
+
+The slide shows two hypotheses:
+
+$H_0$ : only noise
+
+$H_1$ : signal + noise
+
+And it shows errors:
+
+False Alarm
+
+Miss Detection
+
+So probability helps measure these risks.
+
+\subsection*{1.3 Communication Networks (page 6)}
+
+Networks have uncertainty like:
+
+arrival of packets
+
+delay (latency)
+
+QoS variations
+
+Probability is used to model and predict these uncertain behaviors.
+
+\section*{2) Probability Basics: Experiment, Outcome, Event, Sample Space}
+
+This is the foundation of the whole course.
+
+\subsection*{2.1 Experiment (E)}
+
+Experiment (E):
+
+A procedure we perform, that produces some result.
+
+Example (given):
+
+Tossing a coin five times → $E_5$
+
+\subsection*{2.2 Outcome ($\xi$)}
+
+Outcome ($\xi$):
+
+A possible result of an experiment.
+
+Example (given):
+
+One outcome of $E_5$:
+
+$\xi_1 = HHTHT$
+
+Beginner clarity:
+
+Outcome = one exact result
+
+Like a single sequence in 5 tosses.
+
+\subsection*{2.3 Event}
+
+Event (Any letter):
+
+A certain set of outcomes of an experiment.
+
+Example (given):
+
+Event $C$ in experiment $E_5$:
+
+$C = \{ \text{all outcomes consisting of an even number of heads} \}$
+
+Intuition:
+
+Event is like a “condition”.
+
+Not one outcome, but a collection.
+
+\subsection*{2.4 Sample Space (S)}
+
+Sample Space (S):
+
+The collection or set of all possible distinct outcomes of an experiment.
+
+The lecture emphasizes sample space outcomes are:
+
+Mutually Exclusive
+
+Collectively Exhaustive
+
+(A) Mutually Exclusive
+
+You can get heads or tails, but not both.
+
+So outcomes do not overlap.
+
+(B) Collectively Exhaustive
+
+You cannot get anything other than heads or tails.
+
+So all possibilities are covered.
+
+\subsection*{2.5 Types of Sample Space (page 5)}
+
+The lecture says sample space can be:
+
+1) Discrete
+
+Finite outcomes.
+
+Example:
+
+$S = \{H,T\}$
+
+2) Countably Infinite
+
+Infinite outcomes but listable.
+
+Example from lecture:
+
+Flip a coin until tails occurs
+
+Possible outcomes:
+
+T
+
+HT
+
+HHT
+
+HHHT
+
+…
+
+3) Continuous
+
+Uncountably many outcomes.
+
+Example from lecture:
+
+Random number generator in $[0,1)$
+
+$S = \{x : 0 \le x < 1\}$
+
+\section*{3) Probability Definition}
+
+Probability:
+
+It is a measure of the likelihood of various events
+
+OR
+
+It is a function of an event that produces a numerical quantity that measures the likelihood of that event.
+
+\section*{4) Axioms of Probability}
+
+The lecture defines axioms as:
+
+self-evident statements requiring no proof.
+
+Axiom 1: Range
+
+For any event $A$:
+
+\[
+0 \le Pr(A) \le 1
+\]
+
+Axiom 2: Sample space probability
+
+\[
+Pr(S) = 1
+\]
+
+Axiom 3: Additivity for mutually exclusive events
+
+(a) Two disjoint events
+
+If:
+
+\[
+A \cap B = \emptyset
+\]
+
+Then:
+
+\[
+Pr(A \cup B) = Pr(A) + Pr(B)
+\]
+
+(b) Infinite disjoint events
+
+\[
+Pr\left(\bigcup_{i=1}^{\infty} A_i\right)
+=
+\sum_{i=1}^{\infty} Pr(A_i)
+\]
+
+\section*{5) Corollary from Axioms}
+
+Corollary 2.1:
+
+For a finite number $M$ of mutually exclusive sets:
+
+\[
+Pr\left(\bigcup_{i=1}^{M} A_i\right)
+=
+\sum_{i=1}^{M} Pr(A_i)
+\]
+
+Explanation:
+
+This is basically Axiom 3, but for finite unions.
+
+\section*{6) Propositions from Axioms}
+
+Proposition 2.1: Complement Rule
+
+\[
+Pr(A^c) = 1 - Pr(A)
+\]
+
+Stepwise derivation (very exam important)
+
+$A$ and $A^c$ cannot happen together:
+
+\[
+A \cap A^c = \emptyset
+\]
+
+Together they cover the full sample space:
+
+\[
+A \cup A^c = S
+\]
+
+From Axiom 2:
+
+\[
+Pr(S) = 1
+\]
+
+From Axiom 3(a):
+
+\[
+Pr(A \cup A^c) = Pr(A) + Pr(A^c)
+\]
+
+Substitute:
+
+\[
+1 = Pr(A) + Pr(A^c)
+\]
+
+Rearrange:
+
+\[
+Pr(A^c) = 1 - Pr(A)
+\]
+
+Proposition 2.2: Monotonicity Rule
+
+If $A \subset B$, then:
+
+\[
+Pr(A) \le Pr(B)
+\]
+
+\section*{7) Simple Diagrams (for understanding)}
+
+Event inside sample space
+
+\begin{verbatim}
++-------------------+
+|         S         |
+|   +----------+    |
+|   |    A     |    |
+|   +----------+    |
++-------------------+
+\end{verbatim}
+
+Complement
+
+\begin{verbatim}
++-------------------+
+|         S         |
+|   +----------+    |
+|   |    A     |    |
+|   +----------+    |
+|  rest = A^c       |
++-------------------+
+\end{verbatim}
+
+\section*{8) Practice Examples (Beginner Friendly)}
+
+Example 1: Complement
+
+If:
+
+\[
+Pr(A) = 0.65
+\]
+
+Then:
+
+\[
+Pr(A^c) = 1 - 0.65 = 0.35
+\]
+
+Example 2: Additivity (Mutually exclusive)
+
+Die roll:
+
+$A = \{1\}$
+
+$B = \{2\}$
+
+\[
+Pr(A)=\frac{1}{6}, \quad Pr(B)=\frac{1}{6}
+\]
+
+\[
+Pr(A \cup B) = \frac{1}{6} + \frac{1}{6} = \frac{2}{6}
+\]
+
+Example 3: Monotonicity
+
+Let:
+
+$A = \{\text{roll 6}\}$
+
+$B = \{\text{roll even}\} = \{2,4,6\}$
+
+Then:
+
+\[
+A \subset B \Rightarrow Pr(A) \le Pr(B)
+\]
+
+\section*{9) Final Summary (Very Concise)}
+
+This lecture portion establishes:
+
+the building blocks of probability (experiment → outcomes → events → sample space)
+
+the three probability axioms
+
+how to derive key probability results like:
+
+complement rule
+
+monotonicity rule
+
+additivity for finite unions
+
+These are the base tools required for joint and conditional probability later.
+
+\section*{10) Key Formula Sheet (Exam Ready)}
+
+Axioms:
+
+\[
+0 \le Pr(A) \le 1
+\]
+
+\[
+Pr(S)=1
+\]
+
+If $A \cap B = \emptyset$:
+
+\[
+Pr(A \cup B)=Pr(A)+Pr(B)
+\]
+
+Infinite union:
+
+\[
+Pr\left(\bigcup_{i=1}^{\infty} A_i\right)
+=
+\sum_{i=1}^{\infty} Pr(A_i)
+\]
+
+Corollary (finite union):
+
+\[
+Pr\left(\bigcup_{i=1}^{M} A_i\right)
+=
+\sum_{i=1}^{M} Pr(A_i)
+\]
+
+Complement:
+
+\[
+Pr(A^c)=1-Pr(A)
+\]
+
+Monotonicity:
+
+If $A \subset B$:
+
+\[
+Pr(A) \le Pr(B)
+\]
+
+\section*{11) Probable Exam Questions}
+
+Very likely theory questions:
+
+Define experiment, outcome, event, sample space
+
+Explain mutually exclusive and collectively exhaustive
+
+State the 3 axioms of probability
+
+Derive $Pr(A^c)=1-Pr(A)$
+
+Explain why $A \subset B \Rightarrow Pr(A) \le Pr(B)$
+
+Very likely numericals:
+
+Compute complement probabilities
+
+Compute union probability of disjoint events
+
+Identify sample space type (discrete/countably infinite/continuous)
+
+\end{document}
