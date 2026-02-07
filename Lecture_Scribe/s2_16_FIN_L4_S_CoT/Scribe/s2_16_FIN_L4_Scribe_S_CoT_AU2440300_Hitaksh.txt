@@ -1,0 +1,318 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{setspace}
+\usepackage{hyperref}
+
+\setstretch{1.2}
+
+\title{CSE400 -- Fundamentals of Probability in Computing \\ Lecture 4: Joint Probability and Conditional Probability}
+\author{Instructor: Dhaval Patel, PhD}
+\date{January 15, 2026}
+
+\begin{document}
+
+\maketitle
+
+\section*{Lecture Introduction}
+
+Topic: Joint Probability and Conditional Probability.
+
+This lecture is part of CSE400 (Fundamentals of Probability in Computing). Before studying joint and conditional probability, the lecture first builds foundations:
+
+\begin{itemize}
+    \item What is probability?
+    \item What are experiments, outcomes, events, and sample spaces?
+    \item What rules (axioms) does probability follow?
+\end{itemize}
+
+These basics are necessary because joint and conditional probability are built on them.
+
+\section*{Why Should We Learn CSE400?}
+
+Main idea: Probability is used everywhere in real systems.
+
+Examples mentioned:
+\begin{itemize}
+    \item Daily life reasoning (we constantly judge chances)
+    \item Engineering applications:
+    \begin{itemize}
+        \item Speech Recognition
+        \item Radar Systems
+        \item Communication Networks
+    \end{itemize}
+\end{itemize}
+
+Meaning: In real systems, we never have perfect certainty. We always deal with uncertainty, so we need probability to model, measure, and make decisions.
+
+\section*{Engineering Application 1: Speech Recognition System}
+
+A speech recognition system:
+\begin{itemize}
+    \item Has a vocabulary (Hello, Yes, No, Bye, etc.)
+    \item For each word, it stores templates (example sound patterns)
+    \item When a person speaks, the system records a signal $x(t)$
+    \item This signal is compared with stored templates
+\end{itemize}
+
+Problems:
+\begin{itemize}
+    \item Different speakers (male, female, child)
+    \item Noise and disturbances
+    \item Same word never looks exactly the same
+\end{itemize}
+
+So the system asks: Which word is most probable given the observed signal?
+
+We are not doing exact matching. We are doing probabilistic decision making. This is why probability is essential in speech recognition and natural language processing.
+
+\section*{Engineering Application 2: Radar System}
+
+Radar sends a signal and receives something back.
+
+Two hypotheses:
+\begin{itemize}
+    \item $H_0$: No target, received signal $Y = W$ (only noise)
+    \item $H_1$: Target present, received signal $Y = S + W$ (signal + noise)
+\end{itemize}
+
+Where:
+\begin{itemize}
+    \item $S$ = true signal
+    \item $W$ = noise
+    \item $Y$ = received signal
+\end{itemize}
+
+Decision outcomes:
+\begin{itemize}
+    \item Correct detection
+    \item False alarm (detect target when there is none)
+    \item Miss detection (fail to detect target)
+\end{itemize}
+
+We define probabilities like:
+\[
+P(\text{False Alarm}), \quad P(\text{Miss Detection})
+\]
+These probabilities guide system design and performance. Decisions are based on probability, not certainty.
+
+\section*{Engineering Application 3: Communication Networks}
+
+In networks:
+\begin{itemize}
+    \item Data packets travel from source to destination
+    \item There is delay, loss, congestion
+\end{itemize}
+
+Quality of Service depends on:
+\begin{itemize}
+    \item Probability of packet arrival
+    \item Probability of delay being too large
+    \item Probability of failure
+\end{itemize}
+
+So we model arrival of packets, delay, and throughput as random quantities. All of these need probability theory.
+
+\section*{Lecture Outline}
+
+Three main parts:
+\begin{itemize}
+    \item Introduction to Probability Theory
+    \item Joint Probability
+    \item Conditional Probability
+\end{itemize}
+
+In this lecture, the slides mainly cover Part 1: Foundations.
+
+\section*{Experiment}
+
+Definition: An experiment is a procedure we perform that produces some result.
+
+Example: Tossing a coin 5 times. Call this experiment $E_5$.
+
+Experiment means the process, not a single result.
+
+\section*{Outcome}
+
+Definition: An outcome $\xi$ is a possible result of an experiment.
+
+Example: For 5 coin tosses, one outcome is:
+\[
+\xi_1 = H T H T H
+\]
+
+So:
+\begin{itemize}
+    \item Experiment: Toss coin 5 times
+    \item Outcome: One specific sequence like HHTHT, TTTTT, etc.
+\end{itemize}
+
+\section*{Event}
+
+Definition: An event is a set of outcomes of an experiment.
+
+Example: Let $C$ be the event: ``Number of heads is even'' in 5 tosses.
+
+Then $C$ contains many outcomes: 0 heads, 2 heads, 4 heads.
+
+So, an event is a collection of outcomes that satisfy some condition.
+
+\section*{Sample Space}
+
+Definition: The sample space $S$ is the set of all possible outcomes of an experiment.
+
+Properties:
+\begin{itemize}
+    \item Mutually exclusive: Only one outcome can occur at a time
+    \item Collectively exhaustive: All possible outcomes are included
+\end{itemize}
+
+Example: Flip one coin:
+\[
+S = \{H, T\}
+\]
+
+\section*{Types of Sample Spaces}
+
+The sample space can be:
+
+\subsection*{Discrete}
+\begin{itemize}
+    \item Finite or countably infinite
+    \item Examples:
+    \begin{itemize}
+        \item One coin toss: $\{H, T\}$
+        \item One die roll: $\{1,2,3,4,5,6\}$
+        \item Flip coin until first tail: $\{T, HT, HHT, HHHT, \dots\}$
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Continuous}
+\begin{itemize}
+    \item Values come from a continuous interval
+    \item Examples:
+    \begin{itemize}
+        \item Random number in $[0,1]$
+        \item Time taken by a process
+    \end{itemize}
+\end{itemize}
+
+\section*{Probability and Axioms}
+
+Definition: Probability is a number that measures how likely an event is. Formally, it is a function $\Pr(A)$ that assigns a number to each event $A$.
+
+\subsection*{Axiom 1}
+For any event $A$:
+\[
+0 \leq \Pr(A) \leq 1
+\]
+
+\subsection*{Axiom 2}
+If $S$ is the sample space:
+\[
+\Pr(S) = 1
+\]
+
+\subsection*{Axiom 3 (Additivity)}
+
+If $A \cap B = \emptyset$:
+\[
+\Pr(A \cup B) = \Pr(A) + \Pr(B)
+\]
+
+For infinitely many mutually exclusive events $A_1, A_2, A_3, \dots$:
+\[
+\Pr\left( \bigcup_i A_i \right) = \sum_i \Pr(A_i)
+\]
+
+\section*{Corollary}
+
+For a finite number $M$ of mutually exclusive events $A_1, A_2, \dots, A_M$:
+\[
+\Pr\left( \bigcup_{i=1}^{M} A_i \right) = \sum_{i=1}^{M} \Pr(A_i)
+\]
+
+\section*{Propositions}
+
+\subsection*{Proposition 2.1: Complement Rule}
+
+\[
+\Pr(A^c) = 1 - \Pr(A)
+\]
+
+Reason:
+\[
+\Pr(A) + \Pr(A^c) = \Pr(S) = 1
+\]
+
+\subsection*{Proposition 2.2: Monotonicity}
+
+If $A \subset B$, then:
+\[
+\Pr(A) \leq \Pr(B)
+\]
+
+\section*{Conceptual and Mathematical View}
+
+Conceptually:
+\begin{itemize}
+    \item Experiment = process
+    \item Outcome = one result
+    \item Event = set of results
+    \item Sample space = all results
+    \item Probability = how likely an event is
+\end{itemize}
+
+Mathematically:
+\begin{itemize}
+    \item Events are sets
+    \item $S$ is the universal set
+    \item $\Pr(\cdot)$ is a function from events to $[0,1]$
+    \item Axioms define how this function behaves
+\end{itemize}
+
+\section*{Summary}
+
+You learned:
+\begin{itemize}
+    \item Experiment, Outcome, Event, Sample Space
+    \item Types of sample spaces: Discrete and Continuous
+    \item Meaning of probability
+    \item Three axioms of probability
+    \item Corollary for finite mutually exclusive events
+    \item Two key propositions:
+    \begin{itemize}
+        \item $\Pr(A^c) = 1 - \Pr(A)$
+        \item If $A \subset B$, then $\Pr(A) \leq \Pr(B)$
+    \end{itemize}
+\end{itemize}
+
+These are the foundations for joint probability and conditional probability.
+
+\section*{Formula Sheet}
+
+\[
+0 \leq \Pr(A) \leq 1
+\]
+\[
+\Pr(S) = 1
+\]
+If $A \cap B = \emptyset$:
+\[
+\Pr(A \cup B) = \Pr(A) + \Pr(B)
+\]
+For mutually exclusive $A_i$:
+\[
+\Pr\left( \bigcup_i A_i \right) = \sum_i \Pr(A_i)
+\]
+Complement:
+\[
+\Pr(A^c) = 1 - \Pr(A)
+\]
+If $A \subset B$:
+\[
+\Pr(A) \leq \Pr(B)
+\]
+
+\end{document}
