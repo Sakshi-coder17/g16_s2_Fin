@@ -1,0 +1,365 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\begin{document}
+
+\section*{CSE400 – Fundamentals of Probability in Computing}
+
+\subsection*{Lecture 4: Joint Probability and Conditional Probability}
+
+\textbf{Instructor:} Dhaval Patel, PhD\\
+\textbf{Date:} January 15, 2026
+
+\hrule
+\vspace{1em}
+
+\section*{1. Motivation and Engineering Applications}
+
+\subsection*{1.1 Purpose of Learning Probability}
+
+The lecture motivates probability theory through engineering systems where outcomes are uncertain and must be represented using likelihoods.
+
+\subsection*{1.2 Engineering Application 1: Speech Recognition System}
+
+\subsubsection*{Vocabulary and Templates}
+
+\begin{itemize}
+  \item Vocabulary shown:
+  \begin{itemize}
+    \item Hello
+    \item Yes
+    \item No
+    \item Bye
+  \end{itemize}
+  \item Each word corresponds to a \textbf{template waveform}.
+\end{itemize}
+
+\subsubsection*{Speaker Variability}
+
+\begin{itemize}
+  \item The same word spoken by different speakers produces different waveforms:
+  \begin{itemize}
+    \item Speaker 1 (male)
+    \item Speaker 2 (male)
+    \item Speaker 3 (female)
+    \item Speaker 4 (child)
+  \end{itemize}
+\end{itemize}
+
+\subsubsection*{Signal Representation}
+
+\begin{itemize}
+  \item Time-domain signal: $( d(t) )$
+  \item Transformation shown to frequency domain:
+  \[
+  d(t) \rightarrow X(\omega)
+  \]
+\end{itemize}
+
+\subsubsection*{Noise and Interference}
+
+\begin{itemize}
+  \item Observed signal includes:
+  \begin{itemize}
+    \item Noise
+    \item Interference
+  \end{itemize}
+\end{itemize}
+
+\subsubsection*{Probability Emphasis}
+
+\begin{itemize}
+  \item A probability comparison is written:
+  \[
+  P_2 > P_1
+  \]
+  \item Recognition is based on which outcome is \textbf{more probable}.
+\end{itemize}
+
+\subsection*{1.3 Engineering Application 2: Radar System}
+
+\subsubsection*{System Description}
+
+\begin{itemize}
+  \item Transmitter (Tx) sends a signal.
+  \item Receiver (Rx) observes the signal.
+\end{itemize}
+
+\subsubsection*{Hypotheses Shown}
+
+\[
+H_0: y_i = w_i
+\]
+\[
+H_1: y_i = s_i + w_i
+\]
+
+\begin{itemize}
+  \item $( s_i )$: signal
+  \item $( w_i )$: noise
+\end{itemize}
+
+\subsubsection*{Detection Outcomes}
+
+\begin{itemize}
+  \item False Alarm
+  \item Miss Detection
+\end{itemize}
+
+\subsubsection*{Probability Relationship}
+
+\[
+P_m + P_d = 1
+\]
+
+\begin{itemize}
+  \item Noise is labeled as \textbf{Gaussian} on the slide.
+\end{itemize}
+
+\subsection*{1.4 Engineering Application 3: Communication Network}
+
+\subsubsection*{Network Description}
+
+\begin{itemize}
+  \item Multiple nodes from \textbf{source} to \textbf{destination}.
+  \item Packets traverse different paths.
+\end{itemize}
+
+\subsubsection*{Random Quantities}
+
+\begin{itemize}
+  \item Arrival of packets
+  \item Delay (latency)
+\end{itemize}
+
+\subsubsection*{Quality of Service (QoS)}
+
+\begin{itemize}
+  \item Delay shown in:
+  \begin{itemize}
+    \item milliseconds (ms)
+    \item microseconds ($\mu$s)
+  \end{itemize}
+\end{itemize}
+
+\subsubsection*{Wireless Technologies Listed}
+
+\begin{itemize}
+  \item WiFi:
+  \begin{itemize}
+    \item 2.4 GHz
+    \item 5 GHz
+    \item 6 GHz
+  \end{itemize}
+\end{itemize}
+
+\section*{2. Lecture Outline (As Shown)}
+
+\subsection*{2.1 Topics Listed}
+
+\begin{enumerate}
+  \item \textbf{Introduction to Probability Theory}
+  \begin{itemize}
+    \item Experiments, Sample Space, and Events
+    \item Axioms of Probability
+    \item Corollaries and Propositions from Probability Axioms
+    \item How to Assign Probability
+  \end{itemize}
+
+  \item \textbf{Joint Probability}
+  \begin{itemize}
+    \item Motivation, Notation, and Concepts
+    \item Example 1: Card Deck Example
+    \item Example 2: Costume Party Example
+  \end{itemize}
+
+  \item \textbf{Conditional Probability}
+  \begin{itemize}
+    \item Motivation, Notation, and Concepts
+    \item Example 3: Cards Without Replacement
+    \item Example 4: Game of Poker
+    \item Example 5: The Missing Key
+  \end{itemize}
+\end{enumerate}
+
+\begin{quote}
+Only \textbf{Introduction to Probability Theory} is developed in the provided slides.\\
+Joint Probability and Conditional Probability are \textbf{not expanded further} and are therefore \textbf{not included beyond this outline}.
+\end{quote}
+
+\section*{3. Introduction to Probability Theory}
+
+\subsection*{3.1 Experiments, Sample Space, and Events}
+
+\section*{4. Definitions}
+
+\subsection*{4.1 Experiment}
+
+\textbf{Definition:}\\
+An \textbf{Experiment (E)} is a procedure we perform that produces some result.
+
+\textbf{Example:}
+\begin{itemize}
+  \item Tossing a coin five times
+  \item Denoted as $( E_5 )$
+\end{itemize}
+
+\subsection*{4.2 Outcome}
+
+\textbf{Definition:}\\
+An \textbf{Outcome $(\xi)$} is a possible result of an experiment.
+
+\textbf{Example:}
+\[
+\xi_1 = \text{HHTHT}
+\]
+
+\subsection*{4.3 Event}
+
+\textbf{Definition:}\\
+An \textbf{Event (any letter)} is a certain set of outcomes of an experiment.
+
+\textbf{Example:}
+\[
+C = \{\text{all outcomes consisting of an even number of heads}\}
+\]
+
+\subsection*{4.4 Sample Space}
+
+\textbf{Definition:}\\
+The \textbf{Sample Space (S)} is the collection or set of \textbf{all possible distinct outcomes} of an experiment.
+
+\textbf{Properties Listed}
+\begin{itemize}
+  \item Mutually Exclusive
+  \item Collectively Exhaustive
+\end{itemize}
+
+\textbf{Example: Flip a Coin}
+\begin{itemize}
+  \item Mutually Exclusive: Heads or tails, not both.
+  \item Collectively Exhaustive: No outcome other than heads or tails.
+\end{itemize}
+
+\subsection*{4.5 Sample Space (Continued)}
+
+\begin{itemize}
+  \item $( S )$ is the \textbf{universal set} of outcomes of an experiment.
+  \item Sample space types:
+  \begin{itemize}
+    \item Discrete
+    \item Countably infinite
+    \item Continuous
+  \end{itemize}
+\end{itemize}
+
+\subsection*{4.6 Examples of Experiments (Listed)}
+
+\begin{enumerate}
+  \item Flipping a fair coin once
+  \item Cubical die with numbered faces is rolled
+  \item Rolling two dices
+  \item Flip a coin until tails occurs
+  \item Random number generator with interval $([0,1))$
+\end{enumerate}
+
+\section*{5. Axioms of Probability}
+
+\subsection*{5.1 Probability}
+
+\textbf{Definition:}\\
+Probability is:
+\begin{itemize}
+  \item A measure of the likelihood of various events\\
+  \textbf{OR}
+  \item A function of an event that produces a numerical quantity that measures the likelihood of that event.
+\end{itemize}
+
+It is stated that:
+\begin{itemize}
+  \item There are many ways to define such a function.
+\end{itemize}
+
+\subsection*{5.2 Axioms}
+
+\textbf{Statement:}\\
+The axioms are self-evident and require no proof.
+
+\subsection*{5.3 Axiom 1}
+
+For any event $( A )$:
+\[
+0 \leq \Pr(A) \leq 1
+\]
+
+\subsection*{5.4 Axiom 2}
+
+If $( S )$ is the sample space:
+\[
+\Pr(S) = 1
+\]
+
+\subsection*{5.5 Axiom 3}
+
+\subsubsection*{(a) Finite Mutually Exclusive Events}
+
+If $( A \cap B = \varnothing )$:
+\[
+\Pr(A \cup B) = \Pr(A) + \Pr(B)
+\]
+
+\subsubsection*{(b) Infinite Mutually Exclusive Events}
+
+For mutually exclusive sets $( A_i )$, $( i = 1,2,3,\ldots )$:
+\[
+\begin{array}{c}
+\Pr\left(\bigcup_{i=1}^{\infty} A_i\right) \\
+\hline
+\sum_{i=1}^{\infty} \Pr(A_i)
+\end{array}
+\]
+
+\section*{6. Corollary from Probability Axioms}
+
+\subsection*{6.1 Corollary 2.1}
+
+\textbf{Definition:}\\
+Define $( A_i )$ as the null event for all values of $( i )$ greater than $( n )$.
+
+\textbf{Statement:}\\
+For \textbf{M finite} mutually exclusive sets $( A_i )$:
+\[
+\begin{array}{c}
+\Pr\left(\bigcup_{i=1}^{M} A_i\right) \\
+\hline
+\sum_{i=1}^{M} \Pr(A_i)
+\end{array}
+\]
+
+\subsection*{6.2 Relation to Axiom 3}
+
+\begin{itemize}
+  \item Axiom 3 is equivalent to Corollary 2.1 when the sample space is finite.
+  \item The generality of Axiom 3 is necessary when the sample space has infinitely many points.
+\end{itemize}
+
+\section*{7. Propositions from Probability Axioms}
+
+\subsection*{7.1 Proposition 2.1}
+
+\[
+\Pr(A^c) = 1 - \Pr(A)
+\]
+
+\subsection*{7.2 Proposition 2.2}
+
+If $( A \subset B )$:
+\[
+\Pr(A) \leq \Pr(B)
+\]
+
+\section*{8. End of Lecture Content}
+
+\end{document}
