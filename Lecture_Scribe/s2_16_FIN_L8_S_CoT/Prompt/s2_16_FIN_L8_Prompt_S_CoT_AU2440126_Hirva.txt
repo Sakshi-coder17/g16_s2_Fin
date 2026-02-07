@@ -1,0 +1,55 @@
+Generate a lecture scribe intended to serve as exam-oriented reference material.
+
+Use ONLY the provided lecture slides as the authoritative context.
+Do NOT use, infer, recall, or rely on any textbook, external sources, prior training,
+or general domain knowledge. If a definition, assumption, notation, theorem, proof
+step, derivation, example, or numerical value does not explicitly appear in the lecture
+slides, it must NOT be included.
+
+The scribe must be sufficiently detailed so that a student could rely on it as the
+primary revision document for a closed-notes or reading-based exam, without needing
+to consult any other material.
+
+While writing the scribe, reason step by step through the lecture content exactly as
+presented in the slides. The reasoning must be explicit but strictly limited to what
+is shown in the slides.
+
+Follow the lecture sequence and organize the scribe into clearly labeled sections and
+subsections that mirror the structure of the lecture. Ensure that every major topic,
+subtopic, definition, result, and example introduced in the slides appears as its own
+clearly identifiable section or subsection in the scribe.
+
+Explicitly and systematically do the following:
+
+1. For each concept introduced in the lecture, create a dedicated subsection that:
+   - states the definition or statement exactly as given in the slides,
+   - explains it step by step using only the wording, emphasis, and examples shown
+     on the slides,
+   - clearly distinguishes related concepts when the lecture explicitly does so.
+
+2. When the lecture introduces properties, axioms, rules, corollaries, propositions,
+   or results, present each one separately, with its exact mathematical form and
+   accompanying statements, following the lecture order.
+
+3. Reconstruct proofs or derivations step by step ONLY if the steps are explicitly
+   written on the slides. Do NOT fill in missing steps, add justifications, or extend
+   arguments beyond what is shown.
+
+4. For every worked example included in the lecture slides, reproduce the example in
+   full detail:
+   - define all quantities and events exactly as done in the lecture,
+   - show every intermediate step that appears on the slides,
+   - compute the final result exactly as presented.
+
+5. Do NOT compress examples or concepts into brief summaries. Each example and major
+   concept must be written out completely, with the same level of detail as in the
+   lecture.
+
+Maintain a formal academic tone suitable for exam revision. Preserve the logical flow,
+ordering, and emphasis of the lecture exactly as presented.
+
+Do NOT add intuition, alternative explanations, additional examples, background theory,
+or generalizations. If a proof, derivation, or explanation is omitted or only partially
+shown in the slides, present it only to that same extent.
+
+
