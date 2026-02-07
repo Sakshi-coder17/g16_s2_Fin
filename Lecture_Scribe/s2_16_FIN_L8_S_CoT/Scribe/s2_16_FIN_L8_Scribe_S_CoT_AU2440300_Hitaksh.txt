@@ -1,0 +1,466 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{enumitem}
+
+\geometry{margin=1in}
+\setstretch{1.2}
+
+\title{CSE400 -- Fundamentals of Probability in Computing\\
+Lecture 8: Gaussian, Uniform, Exponential, Laplace, and Gamma Random Variables\\
+(Lecture Scribe)}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Slide 1: Title and Context}
+
+\textbf{Topic of the lecture:} \\
+Gaussian, Uniform, Exponential, Laplace, and Gamma Random Variables.
+
+\textbf{Purpose of this lecture:} \\
+To introduce the most important continuous probability distributions used in:
+\begin{itemize}
+    \item Computing systems (noise, delays, errors)
+    \item Communication systems (error probability, signal noise)
+    \item Data modeling and statistics
+    \item Performance and reliability analysis
+\end{itemize}
+
+\textbf{We will learn:}
+\begin{itemize}
+    \item What a Gaussian random variable is and why it is important
+    \item How to compute probabilities using special functions ($\Phi$ and $Q$)
+    \item Other important continuous random variables and their uses
+    \item How to solve probability questions step by step
+\end{itemize}
+
+\section*{Slide 2: Outline of the Lecture}
+
+The lecture is divided into these parts:
+\begin{itemize}
+    \item Gaussian Random Variable
+    \begin{itemize}
+        \item Definition and properties
+        \item Standard forms: Error function and Q-function
+        \item Relation between $\Phi$-function and $Q$-function
+        \item Example
+    \end{itemize}
+    \item Types of Continuous Random Variables
+    \begin{itemize}
+        \item Uniform Random Variable (with example)
+        \item Exponential Random Variable (with example)
+        \item Laplace Random Variable (with example)
+        \item Gamma Random Variable
+        \item Graph and special cases
+        \item Example
+    \end{itemize}
+    \item Homework problem
+    \item Problem solving
+    \item In-class activity: Gaussian density estimation
+\end{itemize}
+
+Before starting, we recall:
+
+A continuous random variable (CRV) can take any real value in some interval. It is described using:
+\begin{itemize}
+    \item PDF (Probability Density Function)
+    \item CDF (Cumulative Distribution Function)
+\end{itemize}
+
+For a CRV $X$:
+\[
+F_X(x) = P(X \le x) = \int_{-\infty}^{x} f_X(t)\, dt
+\]
+
+\section*{Slide 3: Moments, Skewness, and Kurtosis}
+
+\subsection*{Skewness (3rd standardized moment)}
+\[
+C_3 = \frac{E[(X - \mu)^3]}{\sigma^3}
+\]
+
+\textbf{Meaning in simple words:}
+\begin{itemize}
+    \item Skewness tells us whether the distribution is symmetric or tilted.
+    \item If skewness $> 0$: the right tail is longer (distribution leans to the right).
+    \item If skewness $< 0$: the left tail is longer (distribution leans to the left).
+    \item If skewness $= 0$: the distribution is perfectly symmetric.
+\end{itemize}
+
+So, skewness is a measure of symmetry of the PDF about the mean.
+
+\subsection*{Kurtosis (4th standardized moment)}
+\[
+C_4 = \frac{E[(X - \mu)^4]}{\sigma^4}
+\]
+
+\textbf{Meaning in simple words:}
+\begin{itemize}
+    \item Kurtosis tells us how sharp or flat the peak of the distribution is.
+    \item Large kurtosis $\rightarrow$ very sharp peak near the mean.
+    \item Small kurtosis $\rightarrow$ flatter distribution.
+\end{itemize}
+
+So, kurtosis is a measure of peakedness of the PDF.
+
+\section*{Slide 4: Expected Value of a Function of a Random Variable}
+
+For a Continuous Random Variable (CRV):
+\[
+E[g(X)] = \int_{-\infty}^{\infty} g(x) f_X(x)\, dx
+\]
+
+\textbf{Meaning:}
+\begin{itemize}
+    \item Multiply the function $g(x)$ with the PDF $f_X(x)$
+    \item Integrate over all possible values of $x$
+    \item This gives the average (expected) value of $g(X)$
+\end{itemize}
+
+For a Discrete Random Variable (DRV):
+\[
+E[g(X)] = \sum_k g(x_k) P(X = x_k)
+\]
+
+\subsection*{Linearity of Expectation}
+
+For constants $a, b$:
+\[
+E[aX + b] = aE[X] + b
+\]
+
+For a sum of terms:
+\[
+E\left[\sum_{k=1}^{N} g_k(X)\right] = \sum_{k=1}^{N} E[g_k(X)]
+\]
+
+\textbf{Important logic:}
+\begin{itemize}
+    \item The expectation of a sum is the sum of expectations.
+    \item This works even if variables are dependent.
+    \item This is one of the most powerful tools in probability.
+\end{itemize}
+
+\section*{Slide 5: Start of Gaussian Random Variable}
+
+Now we start the most important continuous distribution in probability and statistics: \\
+The Gaussian (Normal) Random Variable.
+
+\section*{Slide 6--7: Definition and Properties of Gaussian Random Variable}
+
+A random variable $X$ is called Gaussian if its PDF is:
+\[
+f_X(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left( -\frac{(x-\mu)^2}{2\sigma^2} \right)
+\]
+
+We write:
+\[
+X \sim \mathcal{N}(\mu, \sigma^2)
+\]
+
+Where:
+\begin{itemize}
+    \item $\mu$ = mean (center of the distribution)
+    \item $\sigma^2$ = variance
+    \item $\sigma$ = standard deviation
+\end{itemize}
+
+\textbf{Conceptual Meaning:}
+\begin{itemize}
+    \item The PDF is bell-shaped.
+    \item It is symmetric around $x = \mu$.
+    \item Most values are near $\mu$.
+    \item As we move away from $\mu$, the probability density decreases smoothly.
+    \item The total area under the curve is 1.
+\end{itemize}
+
+\textbf{Applications:}
+\begin{itemize}
+    \item Thermal noise in electronics
+    \item Measurement errors
+    \item Natural variations
+    \item Signal processing and communication systems
+\end{itemize}
+
+\section*{Slide 8--10: Standard Forms -- Error Function, $\Phi$-function, $Q$-function}
+
+\subsection*{Error Function}
+\[
+\mathrm{erf}(x) = \frac{2}{\sqrt{\pi}} \int_0^x e^{-t^2} dt
+\]
+
+\textbf{Why it is needed:} \\
+Integrals of Gaussian functions cannot be written in simple closed form, so special functions like $\mathrm{erf}$ are defined.
+
+\subsection*{Complementary Error Function}
+\[
+\mathrm{erfc}(x) = 1 - \mathrm{erf}(x) = \frac{2}{\sqrt{\pi}} \int_x^{\infty} e^{-t^2} dt
+\]
+
+\subsection*{$\Phi$-function (CDF of Standard Normal)}
+\[
+\Phi(x) = \int_{-\infty}^{x} \frac{1}{\sqrt{2\pi}} e^{-t^2/2} dt
+\]
+Meaning:
+\[
+\Phi(x) = P(Z \le x), \quad Z \sim \mathcal{N}(0,1)
+\]
+
+\subsection*{$Q$-function (Gaussian Tail Function)}
+\[
+Q(x) = \int_{x}^{\infty} \frac{1}{\sqrt{2\pi}} e^{-t^2/2} dt
+\]
+Meaning:
+\[
+Q(x) = P(Z > x)
+\]
+
+\textbf{Important Relation:}
+\[
+Q(x) = 1 - \Phi(x)
+\]
+
+\section*{Slide 11--17: Relation between $\Phi$ and $Q$ (Derivation)}
+
+Let:
+\[
+X \sim \mathcal{N}(\mu, \sigma^2)
+\]
+
+We want:
+\[
+F_X(x) = P(X \le x)
+\]
+
+Step 1:
+\[
+F_X(x) = \int_{-\infty}^{x} \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left( -\frac{(y-\mu)^2}{2\sigma^2} \right) dy
+\]
+
+Step 2 (Standardization): Let
+\[
+t = \frac{y - \mu}{\sigma}
+\]
+Then:
+\[
+F_X(x) = \int_{-\infty}^{(x-\mu)/\sigma} \frac{1}{\sqrt{2\pi}} e^{-t^2/2} dt
+\]
+
+Step 3 (Recognize $\Phi$):
+\[
+F_X(x) = \Phi\left( \frac{x - \mu}{\sigma} \right)
+\]
+
+Tail Probability:
+\[
+P(X > x) = Q\left( \frac{x - \mu}{\sigma} \right)
+\]
+
+Key Identities:
+\[
+Q(x) = 1 - \Phi(x)
+\]
+\[
+F_X(x) = 1 - Q\left( \frac{x - \mu}{\sigma} \right)
+\]
+
+\section*{Slide 18--20: Worked Example}
+
+Given:
+\[
+f_X(x) = \frac{1}{\sqrt{8\pi}} \exp\left( -\frac{(x+3)^2}{8} \right)
+\]
+
+Compare with standard form:
+\[
+\mu = -3, \quad \sigma^2 = 4, \quad \sigma = 2
+\]
+So:
+\[
+X \sim \mathcal{N}(-3, 4)
+\]
+
+\subsection*{1) Find $P(X \le 0)$}
+\[
+P(X \le 0) = F_X(0) = \Phi\left( \frac{0 - (-3)}{2} \right) = \Phi\left( \frac{3}{2} \right) = 1 - Q\left( \frac{3}{2} \right)
+\]
+
+\subsection*{2) Find $P(X > 4)$}
+\[
+P(X > 4) = Q\left( \frac{4 - (-3)}{2} \right) = Q\left( \frac{7}{2} \right)
+\]
+
+\subsection*{General Rule}
+\[
+P(a < X < b) = F_X(b) - F_X(a)
+\]
+
+\section*{Types of Continuous Random Variables}
+
+\subsection*{Uniform Random Variable}
+
+PDF:
+\[
+f_X(x) =
+\begin{cases}
+\frac{1}{b-a}, & a \le x \le b \\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+Mean:
+\[
+E[X] = \frac{a+b}{2}
+\]
+
+Variance:
+\[
+\mathrm{Var}(X) = \frac{(b-a)^2}{12}
+\]
+
+Applications:
+\begin{itemize}
+    \item Random number generation
+    \item Simulation
+    \item Modeling equal uncertainty
+\end{itemize}
+
+\subsection*{Exponential Random Variable}
+
+PDF:
+\[
+f_X(x) =
+\begin{cases}
+\lambda e^{-\lambda x}, & x \ge 0 \\
+0, & x < 0
+\end{cases}
+\]
+
+Mean:
+\[
+E[X] = \frac{1}{\lambda}
+\]
+
+Variance:
+\[
+\mathrm{Var}(X) = \frac{1}{\lambda^2}
+\]
+
+Special property: Memoryless
+
+Applications:
+\begin{itemize}
+    \item Waiting time problems
+    \item Queueing systems
+    \item Failure time modeling
+\end{itemize}
+
+\subsection*{Laplace Random Variable}
+
+PDF:
+\[
+f_X(x) = \frac{1}{2b} e^{-|x - \mu|/b}
+\]
+
+Properties:
+\begin{itemize}
+    \item Sharper peak than Gaussian
+    \item Heavier tails
+    \item Used in noise modeling and privacy mechanisms
+\end{itemize}
+
+\subsection*{Gamma Random Variable}
+
+PDF:
+\[
+f_X(x) = \frac{1}{\Gamma(k)\theta^k} x^{k-1} e^{-x/\theta}, \quad x \ge 0
+\]
+
+Mean:
+\[
+E[X] = k\theta
+\]
+
+Variance:
+\[
+\mathrm{Var}(X) = k\theta^2
+\]
+
+Special cases:
+\begin{itemize}
+    \item Exponential distribution ($k=1$)
+    \item Erlang distribution ($k$ is integer)
+\end{itemize}
+
+Applications:
+\begin{itemize}
+    \item Waiting time for multiple events
+    \item Reliability and queueing models
+\end{itemize}
+
+\section*{Final Summary}
+
+\begin{itemize}
+    \item Gaussian distribution is the most important continuous distribution.
+    \item It is defined by mean $\mu$ and variance $\sigma^2$.
+    \item CDF is expressed using $\Phi$-function.
+    \item Right-tail probabilities are expressed using $Q$-function.
+    \item Relation: $Q(x) = 1 - \Phi(x)$.
+    \item Other important distributions: Uniform, Exponential, Laplace, Gamma.
+    \item These are widely used in computing, communication, and data modeling.
+\end{itemize}
+
+\section*{Formula Sheet}
+
+Gaussian PDF:
+\[
+f_X(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-(x-\mu)^2/(2\sigma^2)}
+\]
+
+Standardization:
+\[
+Z = \frac{X - \mu}{\sigma}
+\]
+
+CDF:
+\[
+F_X(x) = \Phi\left( \frac{x - \mu}{\sigma} \right)
+\]
+
+Q-function:
+\[
+Q(x) = \int_x^{\infty} \frac{1}{\sqrt{2\pi}} e^{-t^2/2} dt
+\]
+
+Relation:
+\[
+Q(x) = 1 - \Phi(x)
+\]
+
+Uniform:
+\[
+f_X(x) = \frac{1}{b-a}
+\]
+
+Exponential:
+\[
+f_X(x) = \lambda e^{-\lambda x}
+\]
+
+Laplace:
+\[
+f_X(x) = \frac{1}{2b} e^{-|x-\mu|/b}
+\]
+
+Gamma:
+\[
+f_X(x) = \frac{1}{\Gamma(k)\theta^k} x^{k-1} e^{-x/\theta}
+\]
+
+\end{document}
