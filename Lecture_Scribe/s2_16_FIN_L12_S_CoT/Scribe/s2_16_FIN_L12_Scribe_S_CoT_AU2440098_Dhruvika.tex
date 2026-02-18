@@ -1,0 +1,458 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\geometry{margin=1in}
+
+\title{CSE400 --- Fundamentals of Probability in Computing\\
+Lecture 11--12: Transformation of Random Variables}
+\author{Instructor: Dhaval Patel, PhD}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\noindent
+\textbf{Course Context:} Transformation techniques for single and multiple random variables\\
+\textbf{Assumption (as per slides):} PDF/CDF of original random variable(s) is known \textit{a priori}
+
+\section*{1. Transformation of a Single Random Variable}
+
+We begin with the fundamental problem:
+
+\begin{quote}
+Given a random variable $X$ with known distribution, and a new random variable defined as
+\[
+Y = g(X),
+\]
+find the distribution (CDF and PDF) of $Y$.
+\end{quote}
+
+\subsection*{1.1 CDF-Based Method (As Derived in Slides)}
+
+We start from first principles.
+
+\subsubsection*{Step 1: Write the CDF of $Y$}
+
+\[
+F_Y(y) = P(Y \le y)
+\]
+
+Since $Y = g(X)$,
+
+\[
+F_Y(y) = P(g(X) \le y)
+\]
+
+At this stage, the derivation depends on the monotonicity of $g(\cdot)$.
+
+\subsection*{Case 1: $g(\cdot)$ is Monotonically Increasing}
+
+If $g$ is strictly increasing, then
+
+\[
+g(X) \le y \quad \Longleftrightarrow \quad X \le g^{-1}(y)
+\]
+
+Therefore,
+
+\[
+F_Y(y) = P(X \le g^{-1}(y)) = F_X(g^{-1}(y))
+\]
+
+This is the key CDF transformation formula.
+
+\subsubsection*{Step 2: Differentiate to Obtain the PDF}
+
+\[
+f_Y(y) = \frac{d}{dy} F_Y(y)
+= \frac{d}{dy} F_X(g^{-1}(y))
+\]
+
+Using the chain rule:
+
+\[
+f_Y(y)
+= f_X(g^{-1}(y)) \cdot \frac{d}{dy} g^{-1}(y)
+\]
+
+Thus:
+
+\[
+\boxed{
+f_Y(y) = f_X(g^{-1}(y)) 
+\left| \frac{d}{dy} g^{-1}(y) \right|
+}
+\]
+
+(The absolute value accounts for decreasing transformations.)
+
+\subsection*{Case 2: $g(\cdot)$ is Monotonically Decreasing}
+
+If $g$ is decreasing:
+
+\[
+g(X) \le y \Longleftrightarrow X \ge g^{-1}(y)
+\]
+
+Thus,
+
+\[
+F_Y(y) = P(X \ge g^{-1}(y))
+= 1 - F_X(g^{-1}(y))
+\]
+
+Differentiating:
+
+\[
+f_Y(y)
+= - f_X(g^{-1}(y)) \frac{d}{dy} g^{-1}(y)
+\]
+
+Since derivative is negative, we again obtain:
+
+\[
+\boxed{
+f_Y(y) = f_X(g^{-1}(y)) 
+\left| \frac{d}{dy} g^{-1}(y) \right|
+}
+\]
+
+\section*{2. Example from Slides}
+
+\subsection*{Example: $X \sim \text{Uniform}(-1,1)$}
+
+Find the PDF of:
+
+\[
+Y = \sin\left(\frac{\pi}{2}X\right)
+\]
+
+\subsubsection*{Step 1: Identify Transformation}
+
+\[
+y = \sin\left(\frac{\pi}{2} x \right)
+\]
+
+Since sine is increasing over $x \in (-1,1)$, we can invert.
+
+\subsubsection*{Step 2: Invert}
+
+\[
+x = \frac{2}{\pi} \sin^{-1}(y)
+\]
+
+\subsubsection*{Step 3: Compute Derivative}
+
+\[
+\frac{dx}{dy}
+=
+\frac{2}{\pi} \cdot \frac{1}{\sqrt{1-y^2}}
+\]
+
+\subsubsection*{Step 4: Substitute into Formula}
+
+Since
+
+\[
+f_X(x) = \frac{1}{2}, \quad -1 < x < 1
+\]
+
+we obtain
+
+\[
+f_Y(y)
+=
+\frac{1}{2}
+\cdot
+\frac{2}{\pi}
+\cdot
+\frac{1}{\sqrt{1-y^2}}
+\]
+
+Thus,
+
+\[
+\boxed{
+f_Y(y) = \frac{1}{\pi \sqrt{1-y^2}}, \quad -1 < y < 1
+}
+\]
+
+This matches the derivation shown in the lecture.
+
+\section*{3. Function of Two Random Variables}
+
+We now move to joint transformations.
+
+Given:
+
+\[
+Z = X + Y
+\]
+
+Find the PDF of $Z$.
+
+\subsection*{3.1 CDF-Based Derivation (As Presented)}
+
+Start with:
+
+\[
+F_Z(z) = P(Z \le z)
+\]
+
+Since $Z = X + Y$,
+
+\[
+F_Z(z) = P(X + Y \le z)
+\]
+
+This defines a region in the $(x,y)$-plane:
+
+\[
+\{(x,y) : x+y \le z\}
+\]
+
+\subsubsection*{Step 1: Write as Double Integral}
+
+\[
+F_Z(z)
+=
+\iint_{x+y \le z}
+f_{X,Y}(x,y) \, dx \, dy
+\]
+
+Region conversion:
+
+\[
+\int_{-\infty}^{\infty}
+\int_{-\infty}^{z-x}
+f_{X,Y}(x,y)
+\, dy \, dx
+\]
+
+\subsubsection*{Step 2: Differentiate w.r.t. $z$}
+
+\[
+f_Z(z) = \frac{d}{dz} F_Z(z)
+\]
+
+Using \textbf{Leibniz Rule}:
+
+If
+
+\[
+G(z) = \int_{a(z)}^{b(z)} h(x,z) \, dx
+\]
+
+then
+
+\[
+\frac{d}{dz}G(z)
+=
+h(b(z),z)b'(z)
+-
+h(a(z),z)a'(z)
++
+\int_{a(z)}^{b(z)}
+\frac{\partial}{\partial z} h(x,z) \, dx
+\]
+
+In our case:
+
+\begin{itemize}
+\item Lower limit does not depend on $z$
+\item Upper limit is $z-x$
+\end{itemize}
+
+Thus,
+
+\[
+f_Z(z)
+=
+\int_{-\infty}^{\infty}
+f_{X,Y}(x, z-x) \, dx
+\]
+
+\subsection*{3.2 Convolution Result (Independence Case)}
+
+If $X$ and $Y$ are independent:
+
+\[
+f_{X,Y}(x,y) = f_X(x) f_Y(y)
+\]
+
+Therefore:
+
+\[
+\boxed{
+f_Z(z)
+=
+\int_{-\infty}^{\infty}
+f_X(x) f_Y(z-x) \, dx
+}
+\]
+
+This is the convolution integral.
+
+\section*{4. Example: Sum of Two Normal Random Variables}
+
+Given:
+
+\[
+X \sim N(0,\sigma^2),
+\quad
+Y \sim N(0,\sigma^2)
+\]
+
+Independent.
+
+\[
+f_Z(z)
+=
+\int_{-\infty}^{\infty}
+\frac{1}{\sqrt{2\pi}\sigma}
+e^{-x^2/(2\sigma^2)}
+\cdot
+\frac{1}{\sqrt{2\pi}\sigma}
+e^{-(z-x)^2/(2\sigma^2)}
+dx
+\]
+
+Combining exponents:
+
+\[
+e^{-\frac{x^2+(z-x)^2}{2\sigma^2}}
+\]
+
+Final result:
+
+\[
+\boxed{
+Z \sim N(0, 2\sigma^2)
+}
+\]
+
+\section*{5. Example: Sum of Exponential Random Variables}
+
+Given:
+
+\[
+X, Y \sim \text{Exponential}(\lambda)
+\]
+
+Independent.
+
+\[
+f_X(x) = \lambda e^{-\lambda x}, \quad x>0
+\]
+
+Using convolution:
+
+\[
+f_Z(z)
+=
+\int_0^z
+\lambda e^{-\lambda x}
+\lambda e^{-\lambda(z-x)}
+dx
+\]
+
+\[
+=
+\lambda^2 e^{-\lambda z}
+\int_0^z dx
+=
+\lambda^2 z e^{-\lambda z}
+\]
+
+Thus,
+
+\[
+\boxed{
+f_Z(z)
+=
+\lambda^2 z e^{-\lambda z}, \quad z>0
+}
+\]
+
+\section*{6. Example: Difference of Two RVs}
+
+For:
+
+\[
+Z = X - Y
+\]
+
+\[
+F_Z(z) = P(X - Y \le z)
+\]
+
+Region:
+
+\[
+x - y \le z
+\]
+
+Follow identical region-based integration approach.
+
+\section*{7. Ratio Example (Mentioned in Slides)}
+
+\[
+Z = \frac{X}{Y}
+\]
+
+Also:
+
+\[
+R = \sqrt{X^2 + Y^2}
+\]
+
+These require Jacobian-based joint transformations.
+
+\section*{Final Exam-Ready Summary}
+
+\subsection*{1. Single RV Transformation}
+
+\[
+f_Y(y)
+=
+f_X(g^{-1}(y))
+\left|
+\frac{d}{dy}g^{-1}(y)
+\right|
+\]
+
+\subsection*{2. Sum of Two RVs}
+
+\[
+F_Z(z)
+=
+P(X+Y \le z)
+\]
+
+\[
+f_Z(z)
+=
+\int f_{X,Y}(x,z-x) \, dx
+\]
+
+If independent:
+
+\[
+f_Z(z)
+=
+\int f_X(x)f_Y(z-x) \, dx
+\]
+
+\subsection*{3. Key Results from Lecture}
+
+\begin{itemize}
+\item Uniform + sine transformation $\rightarrow$ arcsine-type PDF
+\item Sum of normals $\rightarrow$ Normal, variance adds
+\item Sum of exponentials $\rightarrow$ Gamma-type PDF
+\item Leibniz rule essential for differentiating integrals
+\end{itemize}
+
+\end{document}
