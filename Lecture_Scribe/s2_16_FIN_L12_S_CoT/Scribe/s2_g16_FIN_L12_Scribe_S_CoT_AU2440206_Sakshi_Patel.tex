@@ -1,0 +1,367 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amsmath, amssymb, graphicx}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{hyperref}
+
+\geometry{margin=1in}
+\setstretch{1.2}
+
+\title{\textbf{Lecture Scribe}\\Fundamentals of Probability in Computing}
+\author{
+Name: Sakshi Patel\\
+Student ID: AU2440206\\
+Course: Fundamentals of Probability in Computing\\
+}
+\begin{document}
+\date{}
+\maketitle
+\newpage
+
+\section*{Step 1: Main Topics Identified (from the Lecture)}
+
+The lecture revolves around three tightly connected ideas:
+
+\begin{enumerate}
+\item Transformation of Random Variables  
+How probability changes when we apply a function to a random variable.
+
+\item Function of Two Random Variables  
+When output depends on two uncertain quantities simultaneously.
+
+\item Illustrative Derivation  
+Detailed case:
+\[
+Z = X + Y
+\]
+\end{enumerate}
+
+Core message: Random variables are often transformed, and probability must be tracked after transformation.
+
+\section*{2) Transformation of Random Variables}
+
+\subsection*{2.1 Concept (Beginner View)}
+
+Suppose we know the behavior of a variable $X$, but we use something derived from it.
+
+Example:
+
+Data size $X$  
+
+Processing time:
+\[
+Y = 2X + 5
+\]
+
+We need the distribution of $Y$.  
+This process is called transformation.
+
+\subsection*{2.2 Definition}
+
+A transformation occurs when:
+\[
+Y = g(X)
+\]
+
+Where:
+
+$X$ → original random variable  
+
+$g(\cdot)$ → function  
+
+$Y$ → transformed variable  
+
+Goal: find distribution of $Y$.
+
+\subsection*{2.3 Intuition Behind Transformation}
+
+Probability is conserved.
+
+If a value of $X$ occurs with a certain likelihood, the corresponding value of $Y$ carries the same probability.
+
+\[
+P(X \text{ in interval}) = P(Y \text{ in mapped interval})
+\]
+
+\subsection*{2.4 Mathematical Derivation}
+
+Assume continuous random variable.
+
+Step 1: Known pdf
+\[
+f_X(x)
+\]
+
+Step 2: Transformation
+\[
+Y = g(X)
+\]
+
+Step 3: Inverse function
+\[
+X = g^{-1}(Y)
+\]
+
+Step 4: Probability conservation
+\[
+P(y \le Y \le y + dy) = P(x \le X \le x + dx)
+\]
+
+Thus:
+\[
+f_Y(y) dy = f_X(x) dx
+\]
+
+Rearranging:
+\[
+f_Y(y) = f_X(x)\left|\frac{dx}{dy}\right|
+\]
+
+This is the transformation formula.
+
+\subsection*{2.5 Concept Check}
+
+\begin{itemize}
+\item Mapping intervals is valid
+\item Probability is preserved
+\item Derivative converts scale
+\end{itemize}
+
+\subsection*{2.6 Example}
+
+Let:
+\[
+Y = X^2
+\]
+Assume:
+\[
+X \sim \text{Uniform}(-1,1)
+\]
+
+Inverse:
+\[
+X = \pm \sqrt{Y}
+\]
+
+Derivative:
+\[
+\frac{dx}{dy} = \frac{1}{2\sqrt{Y}}
+\]
+
+Total pdf:
+\[
+f_Y(y) = f_X(\sqrt{y})\left|\frac{dx}{dy}\right|
++ f_X(-\sqrt{y})\left|\frac{dx}{dy}\right|
+\]
+
+Reason: two values of $X$ produce the same $Y$.
+
+\section*{3) Function of Two Random Variables}
+
+Now uncertainty comes from two variables:
+
+\[
+Z = g(X,Y)
+\]
+
+\subsection*{3.1 Intuition}
+
+Real systems depend on multiple uncertain factors:
+
+\begin{itemize}
+\item Network delay = transmission + queuing
+\item ML error = noise + data bias
+\item Battery life = temperature + usage
+\end{itemize}
+
+\subsection*{3.2 Definition}
+
+\[
+Z = g(X,Y)
+\]
+
+Goal: find distribution of $Z$.
+
+\subsection*{3.3 Joint Distribution}
+
+Start with:
+\[
+f_{X,Y}(x,y)
+\]
+
+This represents probability that:
+\[
+X=x \text{ and } Y=y
+\]
+
+\subsection*{3.4 Transformation Logic}
+
+Coordinate transformation:
+\[
+(X,Y) \rightarrow Z
+\]
+
+Probability mass remains conserved.
+
+\section*{4) Important Example: $Z = X + Y$}
+
+\subsection*{4.1 Problem}
+
+Given:
+\[
+Z = X + Y
+\]
+
+Find pdf of $Z$.
+
+\subsection*{4.2 Conceptual Understanding}
+
+Fix value $z$.
+
+Find all combinations:
+\[
+x + y = z
+\]
+
+This forms a straight line in the $XY$ plane.
+
+Every point contributes probability.
+
+\subsection*{4.3 Mathematical Derivation}
+
+\[
+f_Z(z) = \int f_{X,Y}(x, z-x)\,dx
+\]
+
+If independent:
+\[
+f_{X,Y}(x,y) = f_X(x)f_Y(y)
+\]
+
+Then:
+\[
+f_Z(z) = \int f_X(x)f_Y(z-x)\,dx
+\]
+
+This operation is called convolution.
+
+\subsection*{4.4 Why Convolution Works}
+
+\begin{itemize}
+\item Each pair $(x,y)$ producing $z$ contributes probability
+\item Add all contributions → integration
+\item Independence → multiplication of pdfs
+\end{itemize}
+
+\subsection*{4.5 Example}
+
+Let:
+\[
+X,Y \sim \text{Uniform}(0,1)
+\]
+
+Then:
+\[
+f_Z(z)=
+\begin{cases}
+z, & 0<z<1 \\
+2-z, & 1<z<2
+\end{cases}
+\]
+
+Shape: triangular distribution.
+
+\section*{5) Conceptual + Mathematical + Intuitive Summary}
+
+\begin{center}
+\begin{tabular}{|c|p{8cm}|}
+\hline
+Level & Understanding \\
+\hline
+Conceptual & Probability stays conserved after transformation \\
+Mathematical & Use derivative and integration \\
+Intuitive & Map original values to new values \\
+Computational & Used in ML, networks, simulations \\
+\hline
+\end{tabular}
+\end{center}
+
+\section*{6) Complex Ideas Explained}
+
+\begin{itemize}
+\item Why derivative appears? → Scale changes during mapping.
+\item Why inverse needed? → Express pdf in new variable.
+\item Why integration? → Many inputs produce same output.
+\item Why independence matters? → Simplifies joint distribution.
+\end{itemize}
+
+\section*{7) Concise Lecture Summary}
+
+\begin{itemize}
+\item Random variables are transformed using functions.
+\item Distribution must be recomputed.
+\item Single variable → derivative rule.
+\item Two variables → joint distribution.
+\item Sum → convolution.
+\end{itemize}
+
+\section*{8) Key Formula Sheet}
+
+Transformation:
+\[
+f_Y(y) = f_X(x)\left|\frac{dx}{dy}\right|
+\]
+
+Joint pdf:
+\[
+f_{X,Y}(x,y)
+\]
+
+Sum of RVs:
+\[
+f_Z(z)=\int f_X(x)f_Y(z-x)\,dx
+\]
+
+\section*{9) Probable Exam Questions}
+
+Conceptual:
+\begin{itemize}
+\item Explain transformation of random variables.
+\item Why derivative is used in pdf transformation?
+\end{itemize}
+
+Derivations:
+\begin{itemize}
+\item Derive pdf of $Y=g(X)$.
+\item Derive pdf of $Z=X+Y$.
+\end{itemize}
+
+Numerical:
+\begin{itemize}
+\item Uniform + Uniform
+\item Normal + Normal
+\item Square transformation
+\end{itemize}
+
+Theory:
+\begin{itemize}
+\item Joint distribution
+\item Independence
+\end{itemize}
+
+\section*{10) Key Insight}
+
+Students often memorize formulas but struggle with derivations.
+
+Examiners typically ask:
+
+\begin{itemize}
+\item Why is each step valid?
+\item Where did the derivative come from?
+\item Why is integration required?
+\end{itemize}
+
+Understanding the logic behind transformations leads to better performance.
+
+\end{document}
