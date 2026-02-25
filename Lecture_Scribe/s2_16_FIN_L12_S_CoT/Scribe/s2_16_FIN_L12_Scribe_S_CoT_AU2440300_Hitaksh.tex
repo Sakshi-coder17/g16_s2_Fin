@@ -1,0 +1,294 @@
+\textbackslash documentclass{[}12pt,a4paper{]}\{article\}
+\textbackslash usepackage\{amsmath, amssymb\}
+\textbackslash usepackage\{geometry\}
+\textbackslash usepackage\{graphicx\}
+\textbackslash usepackage\{hyperref\}
+\textbackslash usepackage\{setspace\}
+\textbackslash geometry\{margin=1in\} \textbackslash setstretch\{1.2\}
+
+\textbackslash title\{CSE400 -\/- Fundamentals of Probability in
+Computing \textbackslash\textbackslash{} Lecture L11-\/-L12:
+Transformation of Random Variables\} \textbackslash author\{Instructor:
+Dhaval Patel, PhD\} \textbackslash date\{\}
+
+\textbackslash begin\{document\} \textbackslash maketitle
+
+\textbackslash section*\{Slide 1: Introduction to Transformation of
+Random Variables\}
+
+\textbackslash subsection*\{Main Idea\}
+
+In probability, many times: \textbackslash begin\{itemize\}
+\textbackslash item We already know a random variable \$X\$.
+\textbackslash item We know its PDF \$f\_X(x)\$ and CDF \$F\_X(x)\$.
+\textbackslash item But we are interested in a new variable made from
+\$X\$ (or from \$X\$ and \$Y\$). \textbackslash end\{itemize\}
+
+Examples: \textbackslash{[} Y = g(X) \textbackslash{]} \textbackslash{[}
+Z = g(X,Y), \textbackslash quad \textbackslash text\{such as \} Z = X+Y,
+\textbackslash; Z = X-Y, \textbackslash; Z =
+\textbackslash frac\{X\}\{Y\}, \textbackslash; Z = X\textbackslash cdot
+Y \textbackslash{]}
+
+\textbackslash subsection*\{Goal of This Lecture\}
+
+If \$X\$ (or \$X,Y\$) is known, how do we find: \textbackslash{[}
+F\_Y(y), \textbackslash; f\_Y(y) \textbackslash quad
+\textbackslash text\{or\} \textbackslash quad F\_Z(z), \textbackslash;
+f\_Z(z)? \textbackslash{]} This process is called
+\textbackslash textbf\{Transformation of Random Variables\}.
+
+\textbackslash section*\{Slide 2: Outline of the Lecture\}
+
+\textbackslash begin\{itemize\} \textbackslash item Transformation of
+Random Variables (single variable case) \textbackslash item Function of
+Two Random Variables (joint transformations) \textbackslash item
+Illustrative Example: \$Z = X + Y\$ (full derivation)
+\textbackslash end\{itemize\}
+
+The function \$g(\textbackslash cdot)\$ can be monotonically increasing
+or decreasing, and limits and signs matter while transforming.
+
+\textbackslash section*\{Slide 3: Case 1 -\/-\/- Transformation of One
+Random Variable\}
+
+Let \$X\$ be a continuous random variable with known PDF \$f\_X(x)\$ and
+CDF \$F\_X(x)\$. Define: \textbackslash{[} Y = g(X) \textbackslash{]} We
+want to find \$F\_Y(y)\$ and \$f\_Y(y)\$.
+
+\textbackslash subsection*\{Step 1: CDF Method\}
+
+By definition: \textbackslash{[} F\_Y(y) = P(Y \textbackslash le y) =
+P(g(X) \textbackslash le y) \textbackslash{]}
+
+If \$g(\textbackslash cdot)\$ is monotonically increasing:
+\textbackslash{[} g(X) \textbackslash le y \textbackslash iff X
+\textbackslash le g\^{}\{-1\}(y) \textbackslash{]} So: \textbackslash{[}
+F\_Y(y) = P(X \textbackslash le g\^{}\{-1\}(y)) = F\_X(g\^{}\{-1\}(y))
+\textbackslash{]}
+
+\textbackslash subsection*\{Step 2: Differentiate to Get the PDF\}
+
+\textbackslash{[} f\_Y(y) = \textbackslash frac\{d\}\{dy\} F\_Y(y) =
+\textbackslash frac\{d\}\{dy\} F\_X(g\^{}\{-1\}(y)) \textbackslash{]}
+
+Using chain rule: \textbackslash{[} f\_Y(y) = f\_X(g\^{}\{-1\}(y))
+\textbackslash cdot \textbackslash frac\{d\}\{dy\}
+\textbackslash left{[}g\^{}\{-1\}(y)\textbackslash right{]}
+\textbackslash{]}
+
+Taking absolute value: \textbackslash{[} \textbackslash boxed\{ f\_Y(y)
+= f\_X(x) \textbackslash left\textbar{} \textbackslash frac\{dx\}\{dy\}
+\textbackslash right\textbar{} \textbackslash Bigg\textbar\_\{x =
+g\^{}\{-1\}(y)\} \} \textbackslash{]}
+
+\textbackslash section*\{Slide 4: If \$g(x)\$ is Decreasing\}
+
+If \$g(\textbackslash cdot)\$ is monotonically decreasing:
+\textbackslash{[} F\_Y(y) = P(g(X) \textbackslash le y) = P(X
+\textbackslash ge g\^{}\{-1\}(y)) = 1 - F\_X(g\^{}\{-1\}(y))
+\textbackslash{]}
+
+Differentiating: \textbackslash{[} f\_Y(y) = - f\_X(g\^{}\{-1\}(y))
+\textbackslash cdot \textbackslash frac\{d\}\{dy\}{[}g\^{}\{-1\}(y){]}
+\textbackslash{]}
+
+Taking absolute value again gives: \textbackslash{[}
+\textbackslash boxed\{ f\_Y(y) = f\_X(g\^{}\{-1\}(y))
+\textbackslash left\textbar{} \textbackslash frac\{dx\}\{dy\}
+\textbackslash right\textbar{} \} \textbackslash{]}
+
+So the same formula works for both increasing and decreasing cases.
+
+\textbackslash section*\{Slide 5: Example 1 -\/-\/- \$Y =
+\textbackslash sin\textbackslash left(\textbackslash frac\{\textbackslash pi
+X\}\{2\}\textbackslash right)\$, \$X \textbackslash sim U(-1,1)\$\}
+
+Given: \textbackslash{[} f\_X(x) = \textbackslash frac\{1\}\{2\},
+\textbackslash quad -1 \textless{} x \textless{} 1 \textbackslash{]}
+
+\textbackslash subsection*\{Step 1: Find the Inverse\}
+
+\textbackslash{[} y =
+\textbackslash sin\textbackslash left(\textbackslash frac\{\textbackslash pi
+x\}\{2\}\textbackslash right) \textbackslash Rightarrow x =
+\textbackslash frac\{2\}\{\textbackslash pi\}
+\textbackslash sin\^{}\{-1\}(y) \textbackslash{]}
+
+\textbackslash subsection*\{Step 2: Compute
+\$\textbackslash frac\{dx\}\{dy\}\$\}
+
+\textbackslash{[} \textbackslash frac\{dx\}\{dy\} =
+\textbackslash frac\{2\}\{\textbackslash pi\} \textbackslash cdot
+\textbackslash frac\{1\}\{\textbackslash sqrt\{1-y\^{}2\}\}
+\textbackslash{]}
+
+\textbackslash subsection*\{Step 3: Apply the Formula\}
+
+\textbackslash{[} f\_Y(y) = f\_X(x) \textbackslash left\textbar{}
+\textbackslash frac\{dx\}\{dy\} \textbackslash right\textbar{} =
+\textbackslash frac\{1\}\{2\} \textbackslash cdot
+\textbackslash frac\{2\}\{\textbackslash pi\} \textbackslash cdot
+\textbackslash frac\{1\}\{\textbackslash sqrt\{1-y\^{}2\}\} =
+\textbackslash frac\{1\}\{\textbackslash pi
+\textbackslash sqrt\{1-y\^{}2\}\} \textbackslash{]}
+
+Domain: \$-1 \textless{} y \textless{} 1\$.
+
+\textbackslash{[} \textbackslash boxed\{ f\_Y(y) =
+\textbackslash frac\{1\}\{\textbackslash pi
+\textbackslash sqrt\{1-y\^{}2\}\}, \textbackslash quad -1 \textless{} y
+\textless{} 1 \} \textbackslash{]}
+
+\textbackslash section*\{Slide 6: Case 2 -\/-\/- Function of Two Random
+Variables (\$Z = X + Y\$)\}
+
+We want to find: \textbackslash begin\{itemize\} \textbackslash item (i)
+PDF of \$Z\$, \$f\_Z(z)\$ \textbackslash item (ii) If \$X\$ and \$Y\$
+are independent \textbackslash item (iii) If \$X \textbackslash sim
+N(0,1)\$, \$Y \textbackslash sim N(0,1)\$, show \$Z \textbackslash sim
+N(0,2)\$ \textbackslash item (iv) If \$X,Y\$ are exponential with
+parameter \$\textbackslash lambda\$, find \$f\_Z(z)\$
+\textbackslash end\{itemize\}
+
+\textbackslash section*\{Slide 7: CDF of \$Z = X + Y\$\}
+
+\textbackslash{[} F\_Z(z) = P(Z \textbackslash le z) = P(X+Y
+\textbackslash le z) \textbackslash{]}
+
+This corresponds to the region: \textbackslash{[} x + y
+\textbackslash le z \textbackslash{]}
+
+So: \textbackslash{[} F\_Z(z) = \textbackslash iint\_\{x+y
+\textbackslash le z\} f\_\{X,Y\}(x,y) \textbackslash, dx \textbackslash,
+dy \textbackslash{]}
+
+\textbackslash section*\{Slide 8: Leibniz Rule\}
+
+If: \textbackslash{[} G(x) = \textbackslash int\_\{a(x)\}\^{}\{b(x)\}
+h(x,y) \textbackslash, dy \textbackslash{]} Then: \textbackslash{[}
+\textbackslash frac\{dG\}\{dx\} = h(x,b(x)) b\textquotesingle(x) -
+h(x,a(x)) a\textquotesingle(x) +
+\textbackslash int\_\{a(x)\}\^{}\{b(x)\}
+\textbackslash frac\{\textbackslash partial h\}\{\textbackslash partial
+x\} dy \textbackslash{]}
+
+\textbackslash section*\{Slide 9: Deriving the PDF of \$Z\$\}
+
+\textbackslash{[} F\_Z(z) = \textbackslash iint\_\{x+y \textbackslash le
+z\} f\_\{X,Y\}(x,y) \textbackslash, dx \textbackslash, dy
+\textbackslash{]}
+
+Differentiating: \textbackslash{[} \textbackslash boxed\{ f\_Z(z) =
+\textbackslash int\_\{-\textbackslash infty\}\^{}\{\textbackslash infty\}
+f\_\{X,Y\}(x, z-x) \textbackslash, dx \} \textbackslash{]}
+
+\textbackslash section*\{Slide 10: Independent Case (Convolution)\}
+
+If \$X\$ and \$Y\$ are independent: \textbackslash{[} f\_\{X,Y\}(x,y) =
+f\_X(x) f\_Y(y) \textbackslash{]}
+
+So: \textbackslash{[} \textbackslash boxed\{ f\_Z(z) =
+\textbackslash int\_\{-\textbackslash infty\}\^{}\{\textbackslash infty\}
+f\_X(x) f\_Y(z-x) \textbackslash, dx \} \textbackslash{]} This is called
+the \textbackslash textbf\{convolution integral\}.
+
+\textbackslash section*\{Slides 10-\/-11: Sum of Two Standard
+Gaussians\}
+
+Given: \textbackslash{[} X \textbackslash sim N(0,1),
+\textbackslash quad Y \textbackslash sim N(0,1) \textbackslash{]}
+\textbackslash{[} f\_X(x) =
+\textbackslash frac\{1\}\{\textbackslash sqrt\{2\textbackslash pi\}\}
+e\^{}\{-x\^{}2/2\}, \textbackslash quad f\_Y(y) =
+\textbackslash frac\{1\}\{\textbackslash sqrt\{2\textbackslash pi\}\}
+e\^{}\{-y\^{}2/2\} \textbackslash{]}
+
+\textbackslash{[} f\_Z(z) =
+\textbackslash int\_\{-\textbackslash infty\}\^{}\{\textbackslash infty\}
+\textbackslash frac\{1\}\{\textbackslash sqrt\{2\textbackslash pi\}\}
+e\^{}\{-x\^{}2/2\} \textbackslash cdot
+\textbackslash frac\{1\}\{\textbackslash sqrt\{2\textbackslash pi\}\}
+e\^{}\{-(z-x)\^{}2/2\} \textbackslash, dx \textbackslash{]}
+
+After simplifying: \textbackslash{[} f\_Z(z) =
+\textbackslash frac\{1\}\{\textbackslash sqrt\{4\textbackslash pi\}\}
+e\^{}\{-z\^{}2/4\} \textbackslash{]}
+
+So: \textbackslash{[} \textbackslash boxed\{ Z \textbackslash sim N(0,2)
+\} \textbackslash{]}
+
+\textbackslash section*\{Slide 12: \$X\$ and \$Y\$ are
+Exponential(\$\textbackslash lambda\$)\}
+
+\textbackslash{[} f\_X(x) = \textbackslash lambda
+e\^{}\{-\textbackslash lambda x\}, \textbackslash; x \textbackslash ge
+0, \textbackslash quad f\_Y(y) = \textbackslash lambda
+e\^{}\{-\textbackslash lambda y\}, \textbackslash; y \textbackslash ge 0
+\textbackslash{]}
+
+\textbackslash{[} f\_Z(z) = \textbackslash int\_0\^{}z
+\textbackslash lambda e\^{}\{-\textbackslash lambda x\}
+\textbackslash cdot \textbackslash lambda
+e\^{}\{-\textbackslash lambda(z-x)\} \textbackslash, dx =
+\textbackslash lambda\^{}2 e\^{}\{-\textbackslash lambda z\}
+\textbackslash int\_0\^{}z dx = \textbackslash lambda\^{}2 z
+e\^{}\{-\textbackslash lambda z\} \textbackslash{]}
+
+\textbackslash{[} \textbackslash boxed\{ f\_Z(z) =
+\textbackslash lambda\^{}2 z e\^{}\{-\textbackslash lambda z\},
+\textbackslash quad z \textbackslash ge 0 \} \textbackslash{]} This is a
+Gamma distribution with shape \$2\$.
+
+\textbackslash section*\{Slide 13: Example -\/-\/- \$Z = X - Y\$\}
+
+\textbackslash{[} F\_Z(z) = P(X - Y \textbackslash le z) = P(Y
+\textbackslash ge X - z) \textbackslash{]} Integrate the joint PDF over
+this region and then differentiate: \textbackslash{[} f\_Z(z) =
+\textbackslash frac\{d\}\{dz\} F\_Z(z) \textbackslash{]} Procedure is
+similar to \$Z = X + Y\$.
+
+\textbackslash section*\{Slide 14: Examples -\/-\/- \$Z = X/Y\$ and \$R
+= \textbackslash sqrt\{X\^{}2 + Y\^{}2\}\$\}
+
+\textbackslash subsection*\{Case 1: \$Z = X/Y\$\}
+
+\textbackslash{[} F\_Z(z) =
+P\textbackslash left(\textbackslash frac\{X\}\{Y\} \textbackslash le
+z\textbackslash right) \textbackslash{]} If \$Y\textgreater0\$,
+inequality stays same. If \$Y\textless0\$, inequality reverses. So
+integration is done piecewise over regions.
+
+\textbackslash subsection*\{Case 2: \$R = \textbackslash sqrt\{X\^{}2 +
+Y\^{}2\}\$\}
+
+\textbackslash{[} F\_R(r) = P(\textbackslash sqrt\{X\^{}2 + Y\^{}2\}
+\textbackslash le r) = P(X\^{}2 + Y\^{}2 \textbackslash le r\^{}2)
+\textbackslash{]} This is probability inside a circle of radius \$r\$:
+\textbackslash{[} F\_R(r) = \textbackslash iint\_\{x\^{}2 + y\^{}2
+\textbackslash le r\^{}2\} f\_\{X,Y\}(x,y) \textbackslash, dx
+\textbackslash, dy \textbackslash{]} \textbackslash{[} f\_R(r) =
+\textbackslash frac\{d\}\{dr\} F\_R(r) \textbackslash{]}
+
+\textbackslash section*\{Final Summary\}
+
+\textbackslash begin\{itemize\} \textbackslash item One-variable
+transformation: \textbackslash{[} \textbackslash boxed\{ f\_Y(y) =
+f\_X(g\^{}\{-1\}(y)) \textbackslash left\textbar{}
+\textbackslash frac\{dx\}\{dy\} \textbackslash right\textbar{} \}
+\textbackslash{]} \textbackslash item Two-variable transformation:
+\textbackslash{[} F\_Z(z) =
+\textbackslash iint\_\{g(x,y)\textbackslash le z\} f\_\{X,Y\}(x,y)
+\textbackslash, dx \textbackslash, dy, \textbackslash quad f\_Z(z) =
+\textbackslash frac\{d\}\{dz\} F\_Z(z) \textbackslash{]}
+\textbackslash item Sum of RVs: \textbackslash{[} f\_Z(z) =
+\textbackslash int\_\{-\textbackslash infty\}\^{}\{\textbackslash infty\}
+f\_X(x) f\_Y(z-x) \textbackslash, dx \textbackslash{]}
+\textbackslash item Leibniz Rule: \textbackslash{[}
+\textbackslash frac\{d\}\{dx\} \textbackslash int\_\{a(x)\}\^{}\{b(x)\}
+h(x,y) dy = h(x,b(x)) b\textquotesingle(x) - h(x,a(x))
+a\textquotesingle(x) + \textbackslash int\_\{a(x)\}\^{}\{b(x)\}
+\textbackslash frac\{\textbackslash partial h\}\{\textbackslash partial
+x\} dy \textbackslash{]} \textbackslash end\{itemize\}
+
+\textbackslash end\{document\}
