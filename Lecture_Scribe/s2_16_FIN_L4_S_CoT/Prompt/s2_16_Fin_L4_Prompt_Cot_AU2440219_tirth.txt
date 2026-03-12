@@ -1,0 +1,49 @@
+ Use Self-Consistency Prompting with Chain-of-Thought reasoning.
+
+Task:
+Generate a lecture scribe from the given lecture images.
+
+Self-Consistency Instructions:
+
+1. Use Chain-of-Thought style reasoning.
+   Show reasoning steps before the final answer.
+
+2. Include explicit reasoning in the scribe.
+
+3. Use the SAME prompt and SAME context across all runs.
+
+4. Generate multiple outputs independently.
+
+5. Use the following workflow:
+   - Use the same prompt in all runs
+   - Use the same context in all runs
+   - Generate multiple scribe outputs independently
+   - Select one scribe based on agreement in assumptions,
+     reasoning steps, and conclusions
+
+6. You must:
+   - Use the same CoT prompt without modification
+   - Generate multiple scribe outputs independently
+   - Select the output with highest consistency
+
+7. You must NOT:
+   - Merge outputs
+   - Edit reasoning manually
+   - Select based on length or fluency
+
+Context:
+Use only the lecture images provided.
+
+Output format:
+
+Run 1:
+<scribe with reasoning>
+
+Run 2:
+<scribe with reasoning>
+
+Run 3:
+<scribe with reasoning>
+
+Selected Output:
+<most consistent scribe>
