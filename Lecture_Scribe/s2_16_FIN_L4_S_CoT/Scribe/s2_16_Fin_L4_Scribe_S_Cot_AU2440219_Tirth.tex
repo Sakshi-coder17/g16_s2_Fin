@@ -1,0 +1,373 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{booktabs}
+
+\geometry{margin=1in}
+
+\title{Lecture 4 Scribe \\ Joint Probability and Conditional Probability}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction to Probability Theory}
+
+\subsection{Experiment, Outcome, Event, Sample Space}
+
+\textbf{Definition: Experiment}
+
+An experiment is a procedure that produces a result.
+
+Example: Tossing a coin five times $(E_5)$
+
+Reasoning: Probability theory studies uncertain processes, so we define the process as an experiment.
+
+\bigskip
+
+\textbf{Definition: Outcome}
+
+An outcome is a possible result of an experiment.
+
+\[
+\xi_1 = HHTHT
+\]
+
+Reasoning: Probability will be assigned to outcomes, so all possible results must be listed.
+
+\bigskip
+
+\textbf{Definition: Event}
+
+An event is a set of outcomes.
+
+Example:
+
+Event $C$ = all outcomes with even number of heads
+
+Reasoning: We are interested in conditions, not only single outcomes.
+
+\bigskip
+
+\textbf{Definition: Sample Space}
+
+Sample space = set of all possible outcomes
+
+\[
+S = \{H, T\}
+\]
+
+Properties:
+
+\begin{itemize}
+\item Mutually exclusive
+\item Collectively exhaustive
+\end{itemize}
+
+Reasoning: To assign probability, we must know all outcomes.
+
+\bigskip
+
+Types of sample space:
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Experiment & Type \\
+\midrule
+Coin flip & Discrete \\
+Die roll & Discrete \\
+Flip until tails & Countably infinite \\
+Random number in [0,1] & Continuous \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Reasoning: Different spaces require different probability models.
+
+\section{Axioms of Probability}
+
+\textbf{Axiom 1}
+
+\[
+0 \le Pr(A) \le 1
+\]
+
+Reasoning: Probability cannot be negative or greater than 1.
+
+\bigskip
+
+\textbf{Axiom 2}
+
+\[
+Pr(S) = 1
+\]
+
+Reasoning: One outcome must occur.
+
+\bigskip
+
+\textbf{Axiom 3}
+
+If $A \cap B = \emptyset$
+
+\[
+Pr(A \cup B) = Pr(A) + Pr(B)
+\]
+
+Reasoning: No overlap, so add probabilities.
+
+\bigskip
+
+For infinite events:
+
+\[
+Pr\left(\bigcup A_i\right) = \sum Pr(A_i)
+\]
+
+Reasoning: Total probability is sum of disjoint events.
+
+\section{Corollary}
+
+For finite events:
+
+\[
+Pr\left(\bigcup_{i=1}^{M} A_i\right)
+=
+\sum_{i=1}^{M} Pr(A_i)
+\]
+
+Reasoning: Finite case follows from axiom.
+
+\section{Propositions}
+
+\textbf{Complement}
+
+\[
+Pr(A^c) = 1 - Pr(A)
+\]
+
+Reasoning: A and complement form whole sample space.
+
+\bigskip
+
+\textbf{Subset}
+
+If $A \subset B$
+
+\[
+Pr(A) \le Pr(B)
+\]
+
+Reasoning: B contains A.
+
+\bigskip
+
+\textbf{Union rule}
+
+\[
+Pr(A \cup B)
+=
+Pr(A) + Pr(B) - Pr(A \cap B)
+\]
+
+Reasoning: Intersection counted twice.
+
+\section{Assigning Probability}
+
+\subsection{Classical}
+
+All outcomes equally likely.
+
+Coin:
+
+\[
+Pr(H)=1/2
+\]
+
+Dice even:
+
+\[
+Pr = 3/6
+\]
+
+Two dice sum = 5
+
+\[
+Pr = 4/36
+\]
+
+Reasoning: Count favorable / total.
+
+\subsection{Relative Frequency}
+
+\[
+Pr(A) =
+\lim_{n \to \infty}
+\frac{n_A}{n}
+\]
+
+Reasoning: Probability is long-run frequency.
+
+\section{Joint Probability}
+
+\[
+Pr(A,B) = Pr(A \cap B)
+\]
+
+Reasoning: Both events occur.
+
+\bigskip
+
+Relative frequency:
+
+\[
+Pr(A,B)
+=
+\lim
+\frac{n_{AB}}{n}
+\]
+
+Reasoning: Count both events.
+
+\subsection{Card Example}
+
+\[
+Pr(A)=26/52
+\]
+
+\[
+Pr(B)=40/52
+\]
+
+\[
+Pr(C)=13/52
+\]
+
+\[
+Pr(A,B)=20/52
+\]
+
+\[
+Pr(A,C)=13/52
+\]
+
+\[
+Pr(B,C)=10/52
+\]
+
+Reasoning: Count cards satisfying both.
+
+\subsection{Costume Example}
+
+\[
+Pr = \frac{1}{4} \times \frac{4}{6} = \frac{1}{6}
+\]
+
+Reasoning: Independent selections.
+
+\section{Conditional Probability}
+
+\[
+Pr(A|B)
+=
+\frac{Pr(A,B)}{Pr(B)}
+\]
+
+Reasoning: Sample space becomes B.
+
+\subsection{Product Rule}
+
+\[
+Pr(A,B)
+=
+Pr(A|B)Pr(B)
+=
+Pr(B|A)Pr(A)
+\]
+
+\subsection{Three events}
+
+\[
+Pr(A,B,C)
+=
+Pr(C|A,B)
+Pr(B|A)
+Pr(A)
+\]
+
+Reasoning: Multiply step by step.
+
+\section{Cards Without Replacement}
+
+\[
+Pr(B|A) = 12/51
+\]
+
+Reasoning: One card removed.
+
+\section{Poker Flush}
+
+\[
+\frac{13}{52}
+\times
+\frac{12}{51}
+\times
+\frac{11}{50}
+\times
+\frac{10}{49}
+\times
+\frac{9}{48}
+\]
+
+Any flush:
+
+\[
+4 \times P
+\]
+
+Reasoning: Four suits.
+
+\section{Missing Key Example}
+
+\[
+P(R|L^c)
+=
+\frac{P(R)}{1-P(L)}
+=
+\frac{0.4}{0.6}
+=
+\frac{2}{3}
+\]
+
+Reasoning: Right implies not left.
+
+\section{Exam Summary}
+
+Remember:
+
+\begin{itemize}
+\item Experiment
+\item Outcome
+\item Event
+\item Sample space
+\item Axioms
+\item Complement rule
+\item Union rule
+\item Classical probability
+\item Relative frequency
+\item Joint probability
+\item Conditional probability
+\item Product rule
+\item Chain rule
+\item Card example
+\item Dice example
+\item Poker example
+\item Missing key example
+\end{itemize}
+
+\end{document}
