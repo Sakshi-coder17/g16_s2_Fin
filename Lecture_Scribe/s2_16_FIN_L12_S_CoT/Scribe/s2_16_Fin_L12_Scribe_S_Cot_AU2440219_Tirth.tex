@@ -1,0 +1,393 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Lecture 12 Scribe \\ Transformation of Random Variables}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Lecture Outline and Objective}
+
+Topics:
+
+\begin{enumerate}
+\item Transformation of Random Variables
+\item Function of Two Random Variables
+\item Example: $Z = X + Y$
+\end{enumerate}
+
+Assumption:
+PDF of original random variable is known.  
+Goal: find PDF of transformed variable.
+
+Reason:
+After applying a function to a random variable, its distribution changes,
+so the new PDF must be derived from probability definitions.
+
+\section{Transformation of One Random Variable}
+
+Let
+\[
+Y = g(X)
+\]
+
+Goal:
+\[
+f_Y(y)
+\]
+
+Method:
+
+\begin{enumerate}
+\item Find CDF
+\item Differentiate to get PDF
+\end{enumerate}
+
+Reason:
+CDF uses inequalities, which are easier to manipulate.
+
+\subsection{Step 1: Write CDF}
+
+\[
+F_Y(y) = P(Y \le y)
+\]
+
+Substitute $Y = g(X)$
+
+\[
+F_Y(y) = P(g(X) \le y)
+\]
+
+\subsection{Step 2: Inverse Function}
+
+If $g(x)$ is increasing,
+
+\[
+P(g(X) \le y) = P(X \le g^{-1}(y))
+\]
+
+So,
+
+\[
+F_Y(y) = F_X(g^{-1}(y))
+\]
+
+Reason:
+Monotonic function allows inversion of inequality.
+
+\subsection{Step 3: Differentiate}
+
+\[
+f_Y(y) =
+\frac{d}{dy} F_X(g^{-1}(y))
+\]
+
+Using chain rule:
+
+\[
+f_Y(y) =
+f_X(g^{-1}(y))
+\frac{dx}{dy}
+\]
+
+Final formula:
+
+\[
+f_Y(y) =
+\frac{f_X(x)}
+{\left|\frac{dy}{dx}\right|}
+\quad x = g^{-1}(y)
+\]
+
+Reason:
+Absolute value needed because derivative may be negative.
+
+\section{Decreasing Function Case}
+
+If $g(x)$ decreasing,
+
+\[
+F_Y(y) = P(X \ge g^{-1}(y))
+\]
+
+\[
+F_Y(y) =
+1 - F_X(g^{-1}(y))
+\]
+
+After differentiation, same result:
+
+\[
+f_Y(y) =
+\frac{f_X(x)}
+{\left|\frac{dy}{dx}\right|}
+\]
+
+\section{Example: Nonlinear Transformation}
+
+Given
+
+\[
+X \sim U(-1,1)
+\]
+
+\[
+f_X(x) =
+\begin{cases}
+\frac12, & -1 < x < 1 \\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+Transformation:
+
+\[
+Y = \sin\left(\frac{\pi X}{2}\right)
+\]
+
+Step 1: Inverse
+
+\[
+x = \frac{2}{\pi} \sin^{-1}(y)
+\]
+
+Step 2: Derivative
+
+\[
+\frac{dx}{dy}
+=
+\frac{2}{\pi}
+\frac{1}{\sqrt{1-y^2}}
+\]
+
+Step 3: Apply formula
+
+\[
+f_Y(y)
+=
+f_X(x)
+\left|\frac{dx}{dy}\right|
+\]
+
+\[
+f_Y(y)
+=
+\frac12
+\cdot
+\frac{2}{\pi}
+\frac{1}{\sqrt{1-y^2}}
+\]
+
+\[
+f_Y(y)
+=
+\frac{1}{\pi \sqrt{1-y^2}},
+\quad -1<y<1
+\]
+
+\section{Function of Two Random Variables}
+
+Let
+
+\[
+Z = X + Y
+\]
+
+Goal:
+
+\[
+f_Z(z)
+\]
+
+Need joint PDF:
+
+\[
+f_{XY}(x,y)
+\]
+
+Reason:
+Transformation depends on two variables.
+
+\section{CDF Method}
+
+\[
+F_Z(z)
+=
+P(Z \le z)
+=
+P(X + Y \le z)
+\]
+
+\[
+F_Z(z)
+=
+\iint_{x+y \le z}
+f_{XY}(x,y) dx dy
+\]
+
+\[
+f_Z(z)
+=
+\frac{d}{dz} F_Z(z)
+\]
+
+\section{Leibnitz Rule}
+
+If
+
+\[
+G(x)
+=
+\int_{a(x)}^{b(x)} h(x,y) dy
+\]
+
+Then
+
+\[
+\frac{d}{dx} G(x)
+=
+h(x,b(x)) b'(x)
+-
+h(x,a(x)) a'(x)
++
+\int_{a(x)}^{b(x)}
+\frac{\partial}{\partial x} h(x,y) dy
+\]
+
+\section{Result for $Z = X + Y$}
+
+\[
+f_Z(z)
+=
+\int
+f_{XY}(x, z-x)
+dx
+\]
+
+\section{Independent Case (Convolution)}
+
+If independent,
+
+\[
+f_{XY}(x,y)
+=
+f_X(x) f_Y(y)
+\]
+
+\[
+f_Z(z)
+=
+\int
+f_X(x) f_Y(z-x)
+dx
+\]
+
+This is called convolution.
+
+\section{Example: Normal + Normal}
+
+\[
+X \sim N(0,1)
+\]
+
+\[
+Y \sim N(0,1)
+\]
+
+Independent
+
+\[
+Z = X + Y
+\]
+
+Result:
+
+\[
+Z \sim N(0,2)
+\]
+
+Reason:
+Variance adds.
+
+\section{Example: Exponential + Exponential}
+
+\[
+f_X(x) = \lambda e^{-\lambda x}, \quad x>0
+\]
+
+\[
+f_Y(y) = \lambda e^{-\lambda y}, \quad y>0
+\]
+
+\[
+f_Z(z)
+=
+\int_0^z
+\lambda e^{-\lambda x}
+\lambda e^{-\lambda(z-x)}
+dx
+\]
+
+Result:
+
+\[
+f_Z(z)
+=
+\lambda^2 z e^{-\lambda z}
+\]
+
+\section{Example: Difference}
+
+\[
+Z = X - Y
+\]
+
+\[
+F_Z(z) = P(X - Y \le z)
+\]
+
+Use same method as sum.
+
+\section{Example: Ratio}
+
+\[
+Z = X/Y
+\]
+
+Must consider:
+
+\begin{itemize}
+\item $Y > 0$
+\item $Y < 0$
+\end{itemize}
+
+Because inequality changes.
+
+\section{Example: Radius}
+
+\[
+R = \sqrt{X^2 + Y^2}
+\]
+
+Requires transformation of two variables.
+
+\section{Exam Steps}
+
+\begin{enumerate}
+\item Write transformation
+\item Use CDF method
+\item Find limits
+\item Differentiate
+\item Use Leibnitz rule if needed
+\item If independent use convolution
+\item Check support
+\end{enumerate}
+
+\end{document}
