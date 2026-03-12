@@ -1,0 +1,371 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{physics}
+\usepackage{bm}
+
+\geometry{a4paper, margin=1in}
+
+\title{Lecture 8 Scribe \ Gaussian, Uniform, Exponential, Laplace, Gamma Random Variables}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Lecture Outline}
+
+\begin{enumerate}
+\item Gaussian random variable
+\item Standard forms (erf, $\Phi$, Q)
+\item Continuous distributions
+\item Moments from CDF
+\item Gaussian modeling
+\item Density estimation
+\item Applications
+\end{enumerate}
+
+\section{Expectation and Moments}
+
+For continuous RV:
+
+[
+E[g(X)] = \int g(x) f_X(x) dx
+]
+
+For discrete RV:
+
+[
+E[g(X)] = \sum g(x_k) P(X=x_k)
+]
+
+Linearity:
+
+[
+E[aX+b] = aE[X] + b
+]
+
+[
+E\left[\sum g_k(X)\right]
+=========================
+
+\sum E[g_k(X)]
+]
+
+\subsection{Central Moments}
+
+Mean:
+
+[
+\mu = E[X]
+]
+
+Variance:
+
+[
+\sigma^2 = E[(X-\mu)^2]
+]
+
+Skewness:
+
+[
+c_s =
+\frac{E[(X-\mu)^3]}{\sigma^3}
+]
+
+Kurtosis:
+
+[
+c_k =
+\frac{E[(X-\mu)^4]}{\sigma^4}
+]
+
+\section{Gaussian Random Variable}
+
+PDF:
+
+[
+f_X(x)
+======
+
+\frac{1}{\sqrt{2\pi\sigma^2}}
+\exp
+\left(
+-\frac{(x-\mu)^2}{2\sigma^2}
+\right)
+]
+
+Notation:
+
+[
+X \sim N(\mu,\sigma^2)
+]
+
+Properties:
+
+\begin{itemize}
+\item Symmetric
+\item Bell shaped
+\item Mean = median = mode
+\item Area = 1
+\end{itemize}
+
+\section{Error Function}
+
+[
+\mathrm{erf}(x)
+===============
+
+\frac{2}{\sqrt{\pi}}
+\int_0^x e^{-t^2} dt
+]
+
+[
+\mathrm{erfc}(x)
+================
+
+# 1-\mathrm{erf}(x)
+
+\frac{2}{\sqrt{\pi}}
+\int_x^\infty e^{-t^2} dt
+]
+
+\section{Phi Function}
+
+[
+\Phi(x)
+=======
+
+\frac{1}{\sqrt{2\pi}}
+\int_{-\infty}^x
+e^{-t^2/2} dt
+]
+
+\section{Q Function}
+
+[
+Q(x)
+====
+
+\frac{1}{\sqrt{2\pi}}
+\int_x^\infty
+e^{-t^2/2} dt
+]
+
+[
+Q(x) = 1 - \Phi(x)
+]
+
+\section{General Gaussian CDF}
+
+[
+X \sim N(\mu,\sigma^2)
+]
+
+[
+F_X(x)
+======
+
+\Phi
+\left(
+\frac{x-\mu}{\sigma}
+\right)
+]
+
+Tail:
+
+[
+P(X>x)
+======
+
+Q
+\left(
+\frac{x-\mu}{\sigma}
+\right)
+]
+
+\section{Example}
+
+[
+f_X(x)
+======
+
+\frac{1}{\sqrt{8\pi}}
+\exp
+\left(
+-\frac{(x+3)^2}{8}
+\right)
+]
+
+Compare:
+
+[
+\mu=-3
+\quad
+\sigma^2=4
+\quad
+\sigma=2
+]
+
+\subsection{P(X \le 0)}
+
+[
+F_X(0)
+======
+
+# \Phi(3/2)
+
+1-Q(3/2)
+]
+
+\subsection{P(X > 4)}
+
+[
+Q(7/2)
+]
+
+\subsection{|X+3| < 2}
+
+[
+-5 < X < -1
+]
+
+[
+\Phi(1)-\Phi(-1)
+================
+
+# 2\Phi(1)-1
+
+1-2Q(1)
+]
+
+\subsection{|X-2| > 1}
+
+[
+X<1
+\quad
+or
+\quad
+X>3
+]
+
+[
+F(1) + P(X>3)
+]
+
+[
+1-Q(2) + Q(3)
+]
+
+\section{CDF Problem}
+
+[
+F_X(x)
+======
+
+\begin{cases}
+0, & x<0 \
+x^2, & 0 \le x \le 1 \
+1, & x>1
+\end{cases}
+]
+
+PDF:
+
+[
+f_X(x)=2x
+]
+
+Mean:
+
+[
+\mu
+===
+
+# \int_0^1 x(2x)dx
+
+\frac{2}{3}
+]
+
+Second moment:
+
+[
+E[X^2]
+======
+
+# \int_0^1 x^2(2x)dx
+
+\frac{1}{2}
+]
+
+Variance:
+
+[
+\sigma^2
+========
+
+## \frac{1}{2}
+
+# \left(\frac{2}{3}\right)^2
+
+\frac{1}{18}
+]
+
+Skewness:
+
+[
+c_s
+===
+
+-\frac{2\sqrt{2}}{5}
+]
+
+Kurtosis:
+
+[
+c_k
+===
+
+\frac{12}{5}
+]
+
+\section{Gaussian Modeling}
+
+[
+X = \sigma Z + \mu
+]
+
+where
+
+[
+Z \sim N(0,1)
+]
+
+\section{Density Estimation}
+
+Given samples
+
+[
+x_1, x_2, \dots, x_n
+]
+
+Estimate
+
+[
+\hat{\mu}, \hat{\sigma}
+]
+
+\section{Applications}
+
+\begin{itemize}
+\item Noise modeling
+\item Sensor errors
+\item Network delay
+\item Image denoising
+\item Cloud latency
+\end{itemize}
+
+\end{document}
