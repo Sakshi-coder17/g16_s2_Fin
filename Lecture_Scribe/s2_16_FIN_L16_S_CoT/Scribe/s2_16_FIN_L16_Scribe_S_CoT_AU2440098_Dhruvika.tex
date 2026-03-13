@@ -1,0 +1,345 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{titlesec}
+
+\geometry{margin=1in}
+\setstretch{1.2}
+
+\title{CSE400 -- Fundamentals of Probability in Computing\\
+Lecture Scribe: Joint Random Variables and Joint Distributions (L15--L18)}
+\author{Instructor: Dhaval Patel, PhD}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Course Information}
+
+\textbf{Course:} CSE400 -- Fundamentals of Probability in Computing \\
+\textbf{Topic:} Joint Random Variables, Joint PMF, Joint PDF, and Joint CDF
+
+\hrule
+\vspace{0.5cm}
+
+\section{Motivation: Why Study Joint Random Variables?}
+
+In many scientific and engineering problems, we are interested in \textbf{more than one random variable at the same time}. The value of one variable may depend on or be related to the value of another.
+
+Thus, instead of studying a single random variable independently, we study \textbf{two random variables together} using \textbf{joint probability distributions}.
+
+The purpose of studying joint random variables is therefore:
+
+\begin{itemize}
+\item To analyze how two random variables behave \textbf{simultaneously}
+\item To determine whether there exists a \textbf{relationship or correlation}
+\item To compute probabilities involving \textbf{combined events}
+\end{itemize}
+
+\section{Motivating Examples}
+
+\subsection{Smart Transportation Example}
+
+Consider a smart traffic system with two random variables:
+
+\begin{itemize}
+\item $X =$ Vehicle speed
+\item $Y =$ Traffic density
+\end{itemize}
+
+Key question:
+
+\begin{quote}
+Can vehicle speed be high when traffic density is also high?
+\end{quote}
+
+Possible answers: \textbf{Yes / No}
+
+This indicates that the values of $X$ and $Y$ may be \textbf{correlated}.
+
+Traffic conditions affect vehicle speed. Therefore, analyzing only one variable does not provide complete information.
+
+Applications include:
+
+\begin{itemize}
+\item Adaptive traffic signals
+\item Congestion prediction
+\item Autonomous vehicle routing
+\end{itemize}
+
+\subsection{Wireless Network Example}
+
+Consider a wireless communication system.
+
+Define:
+
+\begin{itemize}
+\item $X =$ Signal-to-Noise Ratio (SNR)
+\item $Y =$ Data throughput
+\end{itemize}
+
+Question:
+
+\begin{quote}
+If SNR is high, will throughput always be high?
+\end{quote}
+
+The answer is \textbf{not necessarily}.
+
+Even if SNR is high, \textbf{network congestion} may reduce throughput.
+
+Applications include:
+
+\begin{itemize}
+\item 5G scheduling
+\item Adaptive modulation
+\item Network planning
+\end{itemize}
+
+\subsection{Additional Examples}
+
+\textbf{Weather Prediction}
+
+\begin{itemize}
+\item $X =$ Rainfall
+\item $Y =$ Temperature
+\end{itemize}
+
+Applications: Weather forecasting.
+
+\vspace{0.3cm}
+
+\textbf{Drone Delivery Systems}
+
+\begin{itemize}
+\item $X =$ Wind speed
+\item $Y =$ Delivery time
+\end{itemize}
+
+Applications: Logistics and UAV systems.
+
+\vspace{0.3cm}
+
+\textbf{Rolling Two Dice}
+
+\begin{itemize}
+\item $X =$ outcome of the first die
+\item $Y =$ outcome of the second die
+\end{itemize}
+
+Example questions:
+
+\begin{itemize}
+\item $X + Y = 7$
+\item $X > Y$
+\end{itemize}
+
+These require the \textbf{joint distribution}.
+
+\section{Discrete Case -- Joint Probability Mass Function (Joint PMF)}
+
+When random variables are \textbf{discrete}, their joint behavior is described by the \textbf{Joint Probability Mass Function}.
+
+The joint PMF is written as
+
+\[
+P(X = x, Y = y)
+\]
+
+Interpretation:
+
+\begin{itemize}
+\item $X$ takes value $x$
+\item $Y$ simultaneously takes value $y$
+\end{itemize}
+
+Thus, the joint PMF gives the probability of \textbf{simultaneous outcomes of two random variables}.
+
+\section{Joint PMF Table Representation}
+
+For discrete random variables, the joint PMF is commonly represented using a \textbf{table}.
+
+\begin{itemize}
+\item Each \textbf{row} corresponds to a value of $X$
+\item Each \textbf{column} corresponds to a value of $Y$
+\item Each cell contains $P(X=x,Y=y)$
+\end{itemize}
+
+This table provides a \textbf{complete description of the joint distribution}.
+
+\section{Example: Rolling Two Dice}
+
+Consider the experiment of rolling \textbf{two fair dice}.
+
+Define:
+
+\begin{itemize}
+\item $X =$ value on the first die
+\item $Y =$ value on the second die
+\end{itemize}
+
+Possible values:
+
+\[
+X,Y \in \{1,2,3,4,5,6\}
+\]
+
+Total outcomes:
+
+\[
+6 \times 6 = 36
+\]
+
+Since both dice are fair:
+
+\[
+P(X=x,Y=y)=\frac{1}{36}
+\]
+
+for all valid pairs.
+
+Examples:
+
+\begin{itemize}
+\item Probability that $X+Y=7$
+\item Probability that $X>Y$
+\end{itemize}
+
+These require multiple joint outcomes.
+
+\section{Continuous Case -- Joint Probability Density Function (Joint PDF)}
+
+If the random variables are \textbf{continuous}, the joint distribution is represented by a \textbf{Joint Probability Density Function (PDF)}.
+
+Notation:
+
+\[
+f_{X,Y}(x,y)
+\]
+
+This represents the \textbf{probability density} at the point $(x,y)$.
+
+Probabilities are computed by integration.
+
+For a region $R$:
+
+\[
+P((X,Y)\in R) = \iint_R f_{X,Y}(x,y)\,dx\,dy
+\]
+
+Thus, probability corresponds to the \textbf{integral of the density over the region}.
+
+\section{Geometric Interpretation of Joint PDF}
+
+The function $f_{X,Y}(x,y)$ forms a \textbf{surface over the $(x,y)$ plane}.
+
+\begin{itemize}
+\item The plane represents possible values of $X$ and $Y$
+\item Probability corresponds to the \textbf{volume under the surface}
+\end{itemize}
+
+\section{Joint Cumulative Distribution Function (Joint CDF)}
+
+Definition:
+
+\[
+F_{X,Y}(x,y) = P(X \le x,\; Y \le y)
+\]
+
+Interpretation:
+
+\begin{itemize}
+\item $X$ is less than or equal to $x$
+\item $Y$ is less than or equal to $y$
+\end{itemize}
+
+It accumulates probability in the \textbf{lower-left region} of the coordinate plane.
+
+\section{Joint CDF -- Continuous Case}
+
+For continuous random variables:
+
+\[
+F_{X,Y}(x,y) =
+\int_{-\infty}^{x}
+\int_{-\infty}^{y}
+f_{X,Y}(u,v)\,du\,dv
+\]
+
+Reasoning:
+
+\begin{enumerate}
+\item Consider all $u \le x$
+\item Consider all $v \le y$
+\item Integrate the joint density over the region
+\end{enumerate}
+
+\section{Joint CDF -- Discrete Case}
+
+For discrete variables:
+
+\[
+F_{X,Y}(x,y) =
+\sum_{u\le x}
+\sum_{v\le y}
+P(X=u,Y=v)
+\]
+
+Steps:
+
+\begin{enumerate}
+\item Identify values $u \le x$
+\item Identify values $v \le y$
+\item Add probabilities for all such pairs
+\end{enumerate}
+
+\section{Properties of the Joint CDF}
+
+\subsection{Property 1: Probability Range}
+
+\[
+0 \le F_{X,Y}(x,y) \le 1
+\]
+
+\subsection{Property 2: Monotonicity}
+
+The joint CDF is \textbf{non-decreasing} in both $x$ and $y$.
+
+Increasing either variable enlarges the region where probability is accumulated.
+
+\subsection{Property 3: Boundary Behavior}
+
+As $x$ and $y$ increase without bound:
+
+\[
+F_{X,Y}(x,y) \rightarrow 1
+\]
+
+When $x$ or $y \rightarrow -\infty$:
+
+\[
+F_{X,Y}(x,y) \rightarrow 0
+\]
+
+\section{Conclusion}
+
+The lecture introduces the concept of \textbf{joint random variables}, which allow the probabilistic analysis of systems involving multiple uncertain quantities.
+
+Key concepts covered:
+
+\begin{itemize}
+\item Motivation for studying joint random variables
+\item Joint PMF for discrete variables
+\item Joint PDF for continuous variables
+\item Geometric interpretation of joint densities
+\item Definition and computation of the Joint CDF
+\item Properties of the Joint CDF
+\end{itemize}
+
+These concepts form the mathematical foundation for analyzing probabilistic relationships between multiple variables in real-world systems such as transportation networks, wireless communication systems, weather prediction models, and stochastic experiments.
+
+\end{document}
