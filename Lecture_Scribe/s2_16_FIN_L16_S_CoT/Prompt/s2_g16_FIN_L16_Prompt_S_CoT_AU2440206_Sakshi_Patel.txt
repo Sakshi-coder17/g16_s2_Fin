@@ -1,0 +1,8 @@
+Lec: 12 
+i want you to act as my tutor and i want you to generate me a lecture scribe of my course on fundamentals of probability in computing form the lecture pdf i have attached here. firstly identify all the main topics and then give the a detailed explanation(means defination, formula, diagrams and examples).  
+in output i want topic heading, concept explanation in simple langauge assumning i am a beginner, the definations should be in clear tone also give me a stepwise reasoning for the logic and derivations. also include examples and possible examples if any. 
+if there are any complex concepts then break down it into simple steps. explain why each step follows the previous one in the derivation.
+Explain key ideas using conteptual, mathematical and intutive and check whether the given explain is apt for the given problem.
+at the end of scribe give me concise summary, key formula sheet, probable topics to be asked in exam.
+
+while generating the scribe keep these things in mind that dont just expand topics but explain it like a teacher and maintain logical flow across topics.
