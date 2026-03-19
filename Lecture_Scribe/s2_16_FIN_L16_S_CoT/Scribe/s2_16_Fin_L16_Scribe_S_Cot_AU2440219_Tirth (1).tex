@@ -1,0 +1,282 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{setspace}
+\geometry{margin=1in}
+\onehalfspacing
+
+\title{Lecture 15--17 Scribe \\ Joint Random Variables}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Why Study Joint Random Variables}
+
+In real life we often study two random variables at the same time.
+
+Examples:
+\begin{itemize}
+\item Height and weight
+\item Rainfall and temperature
+\item Vehicle speed and traffic density
+\item Rolling two dice
+\end{itemize}
+
+When two quantities vary together, we need probability involving both variables.
+
+Random variables may have a joint distribution.
+
+If variables are independent, computation is simple.
+If not independent, joint analysis is required.
+
+Therefore, joint random variables are used to study the relation between variables.
+
+
+\section{Discrete Case --- Joint PMF}
+
+Suppose $X$ and $Y$ are discrete random variables.
+
+\[
+X = \{x_1, x_2, \dots , x_n\}
+\]
+
+\[
+Y = \{y_1, y_2, \dots , y_m\}
+\]
+
+Then the ordered pair $(X,Y)$ takes values in
+
+\[
+\{(x_1,y_1), (x_1,y_2), \dots , (x_n,y_m)\}
+\]
+
+\subsection{Definition}
+
+\[
+p(x_i,y_j) = P(X=x_i , Y=y_j)
+\]
+
+This gives probability that both events occur simultaneously.
+
+\subsection{Properties}
+
+\[
+0 \le p(x_i,y_j) \le 1
+\]
+
+\[
+\sum_{i=1}^{n} \sum_{j=1}^{m} p(x_i,y_j) = 1
+\]
+
+All probabilities must be non-negative and total probability must be 1.
+
+
+\section{Example --- Rolling Two Dice}
+
+Roll two fair dice.
+
+Let
+
+\[
+X = \text{value on first die}
+\]
+
+\[
+T = \text{sum of both dice}
+\]
+
+Each outcome has probability
+
+\[
+\frac{1}{36}
+\]
+
+$X$ and $T$ are not independent because $T$ depends on $X$.
+
+For example, if $X=6$, then $T \ge 6$.
+
+
+\section{Continuous Case --- Joint PDF}
+
+For continuous variables,
+
+\[
+X \in [a,b], \quad Y \in [c,d]
+\]
+
+Then
+
+\[
+(X,Y) \in [a,b] \times [c,d]
+\]
+
+\subsection{Definition}
+
+A function $f(x,y)$ is joint density if
+
+\[
+P((X,Y) \text{ in small region})
+\approx f(x,y) dx dy
+\]
+
+\subsection{Properties}
+
+\[
+f(x,y) \ge 0
+\]
+
+\[
+\int_c^d \int_a^b f(x,y) dx dy = 1
+\]
+
+Density may be greater than 1 but total probability must be 1.
+
+
+\section{Example}
+
+Given
+
+\[
+f(x,y) = 4xy
+\]
+
+for
+
+\[
+0 \le x \le 1, \quad 0 \le y \le 1
+\]
+
+\subsection{Check Valid PDF}
+
+\[
+\int_0^1 \int_0^1 4xy dx dy
+\]
+
+\[
+= \int_0^1 4y \left[\frac{x^2}{2}\right]_0^1 dy
+\]
+
+\[
+= \int_0^1 2y dy
+\]
+
+\[
+= [y^2]_0^1 = 1
+\]
+
+So valid PDF.
+
+
+\subsection{Find Probability}
+
+Event:
+
+\[
+A = \{X < 0.5 , Y > 0.5\}
+\]
+
+\[
+P(A)
+=
+\int_0^{0.5}
+\int_{0.5}^{1}
+4xy \, dy \, dx
+\]
+
+\[
+=
+\int_0^{0.5}
+2x(1-0.25) dx
+\]
+
+\[
+=
+\int_0^{0.5}
+\frac{3}{2}x dx
+\]
+
+\[
+=
+\frac{3}{16}
+\]
+
+
+\section{Joint CDF}
+
+Definition:
+
+\[
+F(x,y) = P(X \le x , Y \le y)
+\]
+
+CDF gives accumulated probability.
+
+
+\section{Continuous Case}
+
+If PDF is $f(x,y)$,
+
+\[
+F(x,y)
+=
+\int_c^y
+\int_a^x
+f(u,v) du dv
+\]
+
+PDF can be recovered by
+
+\[
+f(x,y)
+=
+\frac{\partial^2}{\partial x \partial y}
+F(x,y)
+\]
+
+
+\section{Discrete Case}
+
+If PMF is $p(x_i,y_j)$,
+
+\[
+F(x,y)
+=
+\sum_{x_i \le x}
+\sum_{y_j \le y}
+p(x_i,y_j)
+\]
+
+CDF is obtained by adding probabilities.
+
+
+\section{Properties of Joint CDF}
+
+\begin{itemize}
+\item $F(x,y)$ is non-decreasing
+\item $F(x,y)=0$ at lower limit
+\item $F(x,y)=1$ at upper limit
+\end{itemize}
+
+
+\section{Exam Recall}
+
+Must remember:
+
+\begin{itemize}
+\item Joint PMF definition
+\item PMF properties
+\item Dice example
+\item Joint PDF definition
+\item Double integral = 1
+\item Example with $4xy$
+\item Joint CDF definition
+\item Continuous CDF integral
+\item Discrete CDF sum
+\item PDF from CDF derivative
+\item CDF properties
+\end{itemize}
+
+\end{document}
