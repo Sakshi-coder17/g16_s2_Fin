@@ -1,0 +1,295 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{\textbf{Lecture Scribe}}
+\author{
+Name: Sakshi Patel\\
+ID: AU2440206\\
+Course: Fundamentals of Probability in Computing\\
+}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{�� PART 1: MAIN TOPICS }
+
+From your lecture, here’s the logical flow:
+\begin{itemize}
+\item Random Vectors (Multivariate Random Variables)
+\item Mean Vector
+\item Covariance \& Correlation Matrix
+\item Linear Transformations $Y = AX + b$
+\item Expectation under Transformation
+\item Covariance under Transformation
+\item Multivariate Gaussian Distribution
+\item Special Cases (Zero Correlation vs Independence)
+\item Case Study: Smart City Traffic + Weather System
+\end{itemize}
+
+\section*{�� PART 2: TEACHING MODE }
+
+\section*{1️⃣ RANDOM VECTORS}
+
+\textbf{Concept}
+
+A random vector is a collection of multiple random variables treated as a single entity.
+
+\[
+X =
+\begin{bmatrix}
+X_1 \\
+X_2 \\
+\vdots \\
+X_n
+\end{bmatrix}
+\]
+
+\textbf{Why do we need this?}
+
+Because real-world systems are multi-dimensional.
+
+One variable = oversimplification \\
+Multiple variables = reality
+
+\textbf{Example}
+
+\[
+X =
+\begin{bmatrix}
+\text{Rainfall} \\
+\text{Traffic} \\
+\text{Speed}
+\end{bmatrix}
+\]
+
+\textbf{Intuition}
+
+A state of the system at one moment
+
+\section*{2️⃣ MEAN VECTOR}
+
+\textbf{Definition}
+
+\[
+\mu = E[X] =
+\begin{bmatrix}
+E[X_1] \\
+E[X_2] \\
+\vdots
+\end{bmatrix}
+\]
+
+\textbf{Step-by-step reasoning}
+
+Each variable has an average \\
+Combine them into a vector \\
+That becomes the system’s “center”
+
+\textbf{Example}
+
+\[
+\mu =
+\begin{bmatrix}
+10 \\
+50 \\
+40
+\end{bmatrix}
+\]
+
+\section*{3️⃣ COVARIANCE MATRIX}
+
+\textbf{Definition}
+
+\[
+\Sigma = E[(X - \mu)(X - \mu)^T]
+\]
+
+\textbf{Two variables case}
+
+\[
+\text{Cov}(X,Y) = E[(X - \mu_X)(Y - \mu_Y)]
+\]
+
+\textbf{Matrix form}
+
+\[
+\Sigma =
+\begin{bmatrix}
+\text{Var}(X_1) & \text{Cov}(X_1, X_2) \\
+\text{Cov}(X_2, X_1) & \text{Var}(X_2)
+\end{bmatrix}
+\]
+
+\textbf{Interpretation}
+
+Covariance matrix = Dependency blueprint of the system
+
+\section*{4️⃣ LINEAR TRANSFORMATION}
+
+\textbf{Definition}
+
+\[
+Y = AX + b
+\]
+
+\textbf{Example}
+
+\[
+Y = 0.7 \cdot \text{Traffic} - 0.3 \cdot \text{Speed}
+\]
+
+\section*{5️⃣ EXPECTATION UNDER TRANSFORMATION}
+
+\textbf{Formula}
+
+\[
+E[Y] = A\mu + b
+\]
+
+\textbf{Derivation}
+
+\[
+Y = AX + b
+\]
+
+\[
+E[Y] = E[AX + b]
+\]
+
+\[
+= A E[X] + b
+\]
+
+\[
+= A\mu + b
+\]
+
+\section*{6️⃣ COVARIANCE UNDER TRANSFORMATION}
+
+\textbf{Formula}
+
+\[
+\Sigma_Y = A \Sigma_X A^T
+\]
+
+\textbf{Derivation}
+
+\[
+Y = AX + b
+\]
+
+\[
+Y - \mu_Y = A(X - \mu_X)
+\]
+
+\[
+(Y - \mu_Y)(Y - \mu_Y)^T
+\]
+
+\[
+= A(X - \mu_X)(X - \mu_X)^T A^T
+\]
+
+\[
+\Sigma_Y = A \Sigma_X A^T
+\]
+
+\section*{7️⃣ MULTIVARIATE GAUSSIAN}
+
+\textbf{Definition}
+
+A random vector whose joint distribution is Gaussian.
+
+\textbf{Property}
+
+\[
+X \sim N(\mu, \Sigma)
+\]
+
+\[
+Y = AX + b \sim N(A\mu + b, A\Sigma A^T)
+\]
+
+\section*{8️⃣ SPECIAL CASES}
+
+Zero covariance $\neq$ independence
+
+Cov = 0 → no linear relation \\
+Nonlinear relation can exist
+
+If Gaussian:
+
+Zero covariance ⇒ independence
+
+\section*{9️⃣ CASE STUDY}
+
+\[
+X =
+\begin{bmatrix}
+\text{Rain} \\
+\text{Traffic} \\
+\text{Speed} \\
+\text{Pollution} \\
+\text{Temperature}
+\end{bmatrix}
+\]
+
+\textbf{Transformation}
+
+\[
+Y = AX
+\]
+
+\section*{�� FINAL SUMMARY}
+
+\begin{itemize}
+\item Random vector = multiple variables together
+\item Mean = average state
+\item Covariance = relationships
+\item Linear transform = combine variables
+\item Mean transforms linearly
+\item Covariance transforms as $A \Sigma A^T$
+\item Gaussian = defined by mean + covariance
+\item Zero covariance $\neq$ independence
+\end{itemize}
+
+\section*{�� FORMULA SHEET}
+
+\[
+\mu = E[X]
+\]
+
+\[
+\Sigma = E[(X - \mu)(X - \mu)^T]
+\]
+
+\[
+Y = AX + b
+\]
+
+\[
+E[Y] = A\mu + b
+\]
+
+\[
+\Sigma_Y = A \Sigma_X A^T
+\]
+
+\section*{�� PROBABLE EXAM QUESTIONS}
+
+\begin{itemize}
+\item Define random vector with example
+\item Derive $E[Y] = A\mu + b$
+\item Derive covariance transformation
+\item Explain covariance matrix interpretation
+\item Difference: covariance vs independence
+\item Multivariate Gaussian properties
+\item Numerical on linear transformation
+\item Case-study based conceptual question
+\end{itemize}
+
+\end{document}
