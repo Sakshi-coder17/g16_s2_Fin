@@ -1,0 +1,269 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{geometry}
+\usepackage{setspace}
+\geometry{margin=1in}
+\setstretch{1.2}
+
+\title{CSE400 -- Fundamentals of Probability in Computing\\
+Lecture Scribe\\
+Linear Transformations \& Expectations of Multiple Random Variables}
+\author{Instructor: Dhaval Patel}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+This lecture focuses on random vectors, their statistical properties, and how they behave under linear transformations. It also introduces multivariate Gaussian distributions.
+
+\section{Random Vector}
+
+A random vector is defined as:
+\[
+X = [X_1, X_2, \dots, X_N]^T
+\]
+
+It represents multiple random variables together.
+
+\subsection{Importance}
+\begin{itemize}
+\item Compact representation
+\item Enables matrix operations
+\item Used in real-world systems (traffic, weather, etc.)
+\end{itemize}
+
+\section{Mean Vector}
+
+\[
+\mu_X = E[X]
+\]
+
+Expanded form:
+\[
+\mu_X =
+\begin{bmatrix}
+E[X_1] \\
+E[X_2] \\
+\vdots \\
+E[X_N]
+\end{bmatrix}
+\]
+
+\section{Correlation Matrix}
+
+\[
+R_{XX} = E[XX^T]
+\]
+
+Element-wise:
+\[
+R_{XX}(i,j) = E[X_i X_j]
+\]
+
+\[
+R_{XX} =
+\begin{bmatrix}
+E[X_1X_1] & E[X_1X_2] \\
+E[X_2X_1] & E[X_2X_2]
+\end{bmatrix}
+\]
+
+\section{Covariance Matrix}
+
+\[
+C_{XX} = E[(X - \mu_X)(X - \mu_X)^T]
+\]
+
+Matrix form:
+\[
+C_{XX} =
+\begin{bmatrix}
+\text{Var}(X_1) & \text{Cov}(X_1,X_2) \\
+\text{Cov}(X_2,X_1) & \text{Var}(X_2)
+\end{bmatrix}
+\]
+
+\section{Linear Transformation}
+
+\[
+Y = AX + b
+\]
+
+\begin{itemize}
+\item $A$: transformation matrix
+\item $b$: shift vector
+\end{itemize}
+
+\section{Mean Transformation}
+
+\[
+E[Y] = E[AX + b]
+\]
+
+\[
+= A E[X] + b
+\]
+
+\[
+\boxed{\mu_Y = A\mu_X + b}
+\]
+
+\section{Correlation Transformation}
+
+\[
+R_{YY} = E[YY^T]
+\]
+
+\[
+= A R_{XX} A^T + A\mu_X b^T + b\mu_X^T A^T + bb^T
+\]
+
+\section{Covariance Transformation}
+
+\[
+Y - \mu_Y = A(X - \mu_X)
+\]
+
+\[
+C_{YY} = E[(Y - \mu_Y)(Y - \mu_Y)^T]
+\]
+
+\[
+= A C_{XX} A^T
+\]
+
+\[
+\boxed{C_{YY} = A C_{XX} A^T}
+\]
+
+\section{Key Observation}
+
+The shift vector $b$ does not affect covariance.
+
+\section{Summary Table}
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+Property & Result \\
+\hline
+Mean & $A\mu_X + b$ \\
+Covariance & $A C_{XX} A^T$ \\
+Correlation & Expanded form \\
+\hline
+\end{tabular}
+\end{center}
+
+\section{Gaussian Distribution}
+
+\subsection{1D Gaussian}
+
+\[
+f(x) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}
+\]
+
+\subsection{Multivariate Gaussian}
+
+\[
+X \sim \mathcal{N}(\mu, C)
+\]
+
+\[
+f_X(x) =
+\frac{1}{(2\pi)^{N/2} \sqrt{\det(C)}}
+\exp\left(-\frac{1}{2}(x-\mu)^T C^{-1} (x-\mu)\right)
+\]
+
+\section{Important Result}
+
+\[
+\text{Var}(X+Y) = \text{Var}(X) + \text{Var}(Y) + 2\text{Cov}(X,Y)
+\]
+
+\section{Case Study: Smart City Model}
+
+\[
+X = [\text{Traffic}, \text{Speed}, \text{Rain}, \text{Temp}, \text{AQI}]
+\]
+
+\subsection{Observations}
+\begin{itemize}
+\item Rain $\uparrow$ $\Rightarrow$ Traffic $\uparrow$
+\item Rain $\uparrow$ $\Rightarrow$ Speed $\downarrow$
+\item Traffic $\uparrow$ $\Rightarrow$ Pollution $\uparrow$
+\end{itemize}
+
+\subsection{Gaussian Model}
+
+\[
+X \sim \mathcal{N}(\mu, \Sigma)
+\]
+
+\subsection{Linear Combination}
+
+\[
+Y = 0.6X_1 - 0.4X_2 + 0.8X_3
+\]
+
+\[
+E[Y] = a^T \mu
+\]
+
+\[
+\text{Var}(Y) = a^T \Sigma a
+\]
+
+\section{Final Summary}
+
+\begin{itemize}
+\item Random vectors represent systems
+\item Mean gives average behavior
+\item Covariance shows relationships
+\item Linear transformations preserve structure
+\item Gaussian distribution is widely used
+\end{itemize}
+
+\section{Formula Sheet}
+
+\subsection*{Mean}
+\[
+\mu_X = E[X]
+\]
+
+\subsection*{Covariance}
+\[
+C_{XX} = E[(X-\mu)(X-\mu)^T]
+\]
+
+\subsection*{Transformation}
+\[
+Y = AX + b
+\]
+
+\subsection*{Mean Transformation}
+\[
+\mu_Y = A\mu_X + b
+\]
+
+\subsection*{Covariance Transformation}
+\[
+C_{YY} = A C_{XX} A^T
+\]
+
+\subsection*{Correlation Transformation}
+\[
+R_{YY} = A R_{XX} A^T + A\mu_X b^T + b\mu_X^T A^T + bb^T
+\]
+
+\subsection*{Gaussian PDF}
+\[
+f_X(x) =
+\frac{1}{(2\pi)^{N/2} \sqrt{\det(C)}}
+\exp\left(-\frac{1}{2}(x-\mu)^T C^{-1} (x-\mu)\right)
+\]
+
+\end{document}
