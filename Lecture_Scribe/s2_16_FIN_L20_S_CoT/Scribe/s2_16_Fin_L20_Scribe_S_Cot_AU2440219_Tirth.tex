@@ -1,0 +1,209 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb, bm}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Lecture 20 Scribe \\ Linear Transformations and Expectations of Multiple Random Variables}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Random Vector}
+
+For random variables
+
+\[
+X_1, X_2, \dots, X_N
+\]
+
+we represent them as a vector
+
+\[
+X =
+\begin{bmatrix}
+X_1 \\
+X_2 \\
+\vdots \\
+X_N
+\end{bmatrix}
+\]
+
+This is called a random vector.
+
+\section{Mean Vector}
+
+\[
+\mu_X = E[X]
+\]
+
+\[
+\mu_X =
+\begin{bmatrix}
+E[X_1] \\
+E[X_2] \\
+\vdots \\
+E[X_N]
+\end{bmatrix}
+\]
+
+\section{Correlation Matrix}
+
+\[
+R_{XX} = E[XX^T]
+\]
+
+Element form
+
+\[
+R_{XX}(i,j) = E[X_i X_j]
+\]
+
+\[
+R_{XX} =
+\begin{bmatrix}
+E[X_1X_1] & E[X_1X_2] \\
+E[X_2X_1] & E[X_2X_2]
+\end{bmatrix}
+\]
+
+\section{Covariance Matrix}
+
+\[
+C_{XX} =
+E[(X-\mu_X)(X-\mu_X)^T]
+\]
+
+\[
+C_{XX} =
+\begin{bmatrix}
+Var(X_1) & Cov(X_1,X_2) \\
+Cov(X_2,X_1) & Var(X_2)
+\end{bmatrix}
+\]
+
+\section{Linear Transformation}
+
+\[
+Y = AX + b
+\]
+
+Expanded form
+
+\[
+Y_i = \sum_j a_{ij} X_j + b_i
+\]
+
+\section{Mean of Transformed Vector}
+
+\[
+\mu_Y = E[Y]
+\]
+
+\[
+\mu_Y = E[AX+b]
+\]
+
+\[
+\mu_Y = A E[X] + b
+\]
+
+\[
+\mu_Y = A \mu_X + b
+\]
+
+\section{Correlation Transformation}
+
+\[
+R_{YY} = E[YY^T]
+\]
+
+\[
+R_{YY}
+=
+E[(AX+b)(AX+b)^T]
+\]
+
+\[
+R_{YY}
+=
+A R_{XX} A^T
++
+A \mu_X b^T
++
+b \mu_X^T A^T
++
+bb^T
+\]
+
+\section{Covariance Transformation}
+
+\[
+Y - \mu_Y = A(X-\mu_X)
+\]
+
+\[
+C_{YY}
+=
+E[(Y-\mu_Y)(Y-\mu_Y)^T]
+\]
+
+\[
+C_{YY}
+=
+A C_{XX} A^T
+\]
+
+\section{Gaussian Distribution}
+
+1D Gaussian
+
+\[
+f(x) =
+\frac{1}{\sqrt{2\pi\sigma^2}}
+\exp
+\left(
+-\frac{(x-\mu)^2}{2\sigma^2}
+\right)
+\]
+
+Multivariate Gaussian
+
+\[
+f(x)
+=
+\frac{1}
+{\sqrt{(2\pi)^N \det(C)}}
+\exp
+\left(
+-\frac12
+(x-\mu)^T
+C^{-1}
+(x-\mu)
+\right)
+\]
+
+\section{Variance Formula}
+
+\[
+Var(X+Y)
+=
+Var(X)+Var(Y)+2Cov(X,Y)
+\]
+
+\section{Linear Combination}
+
+\[
+Y = a^T X
+\]
+
+\[
+E[Y] = a^T \mu
+\]
+
+\[
+Var(Y) = a^T \Sigma a
+\]
+
+\end{document}
