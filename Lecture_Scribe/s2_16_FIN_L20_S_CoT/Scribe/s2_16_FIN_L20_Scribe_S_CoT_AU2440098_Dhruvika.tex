@@ -1,0 +1,340 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{geometry}
+\usepackage{booktabs}
+\geometry{margin=1in}
+
+\title{CSE400 -- Fundamentals of Probability in Computing}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Lecture 20: Linear Transformations and Expectations of Multiple Random Variables}
+
+\section*{1. Random Vector Representation}
+
+Let $(X_1, X_2, \dots, X_N)$ be random variables. Define the random vector:
+
+\[
+X =
+\begin{bmatrix}
+X_1 \\
+X_2 \\
+\vdots \\
+X_N
+\end{bmatrix}
+\]
+
+\textbf{Reasoning:}  
+A collection of random variables is represented as a single vector to enable compact notation and facilitate matrix-based operations.
+
+\section*{2. Mean Vector}
+
+\subsection*{Definition}
+\[
+\mu_X = E[X]
+\]
+
+\subsection*{Component-wise Representation}
+\[
+\mu_X =
+\begin{bmatrix}
+E[X_1] \\
+E[X_2] \\
+\vdots \\
+E[X_N]
+\end{bmatrix}
+\]
+
+\textbf{Reasoning:}  
+Expectation is applied individually to each component of the vector, resulting in a vector of means.
+
+\section*{3. Correlation Matrix}
+
+\subsection*{Definition}
+\[
+R_{XX} = E[XX^T]
+\]
+
+\subsection*{Element-wise Form}
+\[
+R_{XX}(i,j) = E[X_i X_j]
+\]
+
+\subsection*{Matrix Representation}
+\[
+R_{XX} =
+\begin{bmatrix}
+E[X_1X_1] & E[X_1X_2] & \cdots & E[X_1X_N] \\
+E[X_2X_1] & E[X_2X_2] & \cdots & E[X_2X_N] \\
+\vdots & \vdots & \ddots & \vdots \\
+E[X_NX_1] & E[X_NX_2] & \cdots & E[X_NX_N]
+\end{bmatrix}
+\]
+
+\textbf{Reasoning:}  
+Each entry captures the expected product of two variables, representing their pairwise relationship. The matrix is symmetric since $E[X_i X_j] = E[X_j X_i]$.
+
+\section*{4. Covariance Matrix}
+
+\subsection*{Definition}
+\[
+C_{XX} = E[(X - \mu_X)(X - \mu_X)^T]
+\]
+
+\subsection*{Element-wise Interpretation}
+\[
+C_{XX}(i,j) = \text{Cov}(X_i, X_j)
+\]
+
+\textbf{Reasoning:}  
+The covariance matrix measures deviations from the mean:
+\begin{itemize}
+\item Diagonal elements represent variances
+\item Off-diagonal elements represent covariances
+\item The matrix is symmetric
+\end{itemize}
+
+\section*{5. Linear Transformation of Random Vectors}
+
+\subsection*{Model}
+\[
+Y = AX + b
+\]
+
+Where:
+\begin{itemize}
+\item $A$ is a matrix
+\item $b$ is a constant vector
+\end{itemize}
+
+\subsection*{Expanded Form}
+\[
+Y_i = \sum_{j=1}^{N} a_{ij} X_j + b_i
+\]
+
+\textbf{Reasoning:}  
+Each component of $Y$ is obtained as a linear combination of the components of $X$, followed by a constant shift.
+
+\section*{6. Mean of Transformed Vector}
+
+\subsection*{Derivation}
+
+Start with:
+\[
+\mu_Y = E[Y]
+\]
+
+Substitute:
+\[
+\mu_Y = E[AX + b]
+\]
+
+Apply linearity of expectation:
+\[
+\mu_Y = E[AX] + E[b]
+\]
+
+Use properties:
+\begin{itemize}
+\item $E[AX] = A E[X] = A\mu_X$
+\item $E[b] = b$
+\end{itemize}
+
+\subsection*{Final Result}
+\[
+\mu_Y = A\mu_X + b
+\]
+
+\section*{7. Correlation Matrix of Transformed Vector}
+
+\subsection*{Definition}
+\[
+R_{YY} = E[YY^T]
+\]
+
+Substitute:
+\[
+R_{YY} = E[(AX + b)(AX + b)^T]
+\]
+
+\subsection*{Expansion}
+\[
+R_{YY} = E[AXX^TA^T + AXb^T + bX^TA^T + bb^T]
+\]
+
+Apply expectation term-wise:
+\[
+R_{YY} = A E[XX^T] A^T + A E[X] b^T + b E[X]^T A^T + bb^T
+\]
+
+\subsection*{Final Result}
+\[
+R_{YY} = A R_{XX} A^T + A\mu_X b^T + b\mu_X^T A^T + bb^T
+\]
+
+\section*{8. Covariance Matrix of Transformed Vector}
+
+\subsection*{Key Step}
+\[
+Y - \mu_Y = (AX + b) - (A\mu_X + b)
+\]
+
+\[
+Y - \mu_Y = A(X - \mu_X)
+\]
+
+\textbf{Reasoning:}  
+The constant vector $b$ cancels out during subtraction.
+
+\subsection*{Derivation}
+\[
+C_{YY} = E[(Y - \mu_Y)(Y - \mu_Y)^T]
+\]
+
+Substitute:
+\[
+C_{YY} = E[A(X - \mu_X)(X - \mu_X)^T A^T]
+\]
+
+Factor constants:
+\[
+C_{YY} = A E[(X - \mu_X)(X - \mu_X)^T] A^T
+\]
+
+\subsection*{Final Result}
+\[
+C_{YY} = A C_{XX} A^T
+\]
+
+\textbf{Conclusion:}  
+The covariance matrix is independent of the constant vector $b$.
+
+\section*{9. Summary of Results}
+
+For $Y = AX + b$:
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Quantity & Expression \\
+\midrule
+Mean & $\mu_Y = A\mu_X + b$ \\
+Covariance & $C_{YY} = A C_{XX} A^T$ \\
+Correlation & $R_{YY} = A R_{XX} A^T + A\mu_X b^T + b\mu_X^T A^T + bb^T$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section*{10. Numerical Example}
+
+\subsection*{(a) Mean}
+\[
+\mu_Y = A\mu_X
+\]
+
+Obtained by direct matrix multiplication.
+
+\subsection*{(b) Correlation Matrix}
+\[
+R_{YY} = A R_{XX} A^T
+\]
+
+Steps:
+\begin{enumerate}
+\item Compute $AR_{XX}$
+\item Multiply with $A^T$
+\end{enumerate}
+
+\[
+R_{YY} =
+\begin{bmatrix}
+17 & -6 & -9 \\
+-6 & 14 & -8 \\
+-9 & -8 & 19
+\end{bmatrix}
+\]
+
+\subsection*{(c) Covariance Matrix}
+\[
+C_{YY} = R_{YY} - \mu_Y \mu_Y^T
+\]
+
+Steps:
+\begin{enumerate}
+\item Compute $\mu_Y \mu_Y^T$
+\item Subtract from $R_{YY}$
+\end{enumerate}
+
+\[
+C_{YY} =
+\begin{bmatrix}
+16 & -8 & -8 \\
+-8 & 10 & -2 \\
+-8 & -2 & 10
+\end{bmatrix}
+\]
+
+\section*{11. Multivariate Gaussian Distribution}
+
+\[
+f_X(x) =
+\frac{1}{\sqrt{(2\pi)^N \det(C_{XX})}}
+\exp\left(-\frac{1}{2}(x-\mu_X)^T C_{XX}^{-1}(x-\mu_X)\right)
+\]
+
+\section*{12. Two-Dimensional Gaussian Case}
+
+\subsection*{Determinant}
+\[
+\det(C_{XX}) = \sigma_1^2 \sigma_2^2 (1 - \rho^2)
+\]
+
+\subsection*{Quadratic Form Simplification}
+
+\[
+(x - \mu)^T C^{-1} (x - \mu)
+=
+\frac{1}{1-\rho^2}
+\left[(x_1-\mu_1)^2 - 2\rho(x_1-\mu_1)(x_2-\mu_2) + (x_2-\mu_2)^2\right]
+\]
+
+\section*{13. Uncorrelated Gaussian Variables}
+
+\subsection*{Condition}
+\[
+\text{Cov}(X_i, X_j) = 0 \quad (i \ne j)
+\]
+
+\subsection*{Result}
+\[
+f_X(x) = \prod_{i=1}^{N} f_{X_i}(x_i)
+\]
+
+\textbf{Reasoning:}  
+When covariance terms are zero, cross terms vanish and the joint distribution factorizes.
+
+\section*{14. Variance Identity}
+
+\[
+\text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y) + 2\text{Cov}(X,Y)
+\]
+
+\section*{15. Final Logical Flow}
+
+\begin{itemize}
+\item Random variables are represented as vectors
+\item Mean and covariance describe their statistical properties
+\item Linear transformations modify these quantities
+\item Covariance transformation removes constant effects
+\item Gaussian distributions model multivariate cases
+\item Uncorrelated Gaussian variables simplify into independent components
+\end{itemize}
+
+\end{document}
